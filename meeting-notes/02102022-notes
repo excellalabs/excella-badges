@@ -1,0 +1,12 @@
+Badging Notes (2/10)
+
+look into locking down profile updates for slack, permissions etc.
+
+Matt gave high level understanding of what the badging initiative entails to the bench supervisor.
+
+Place to store documents
+- secondary folder within readme file
+
+Matt looking into scaffolding an application so we can have the basics built out
+
+Matt looking into Cloudinary for storage of data if not in ec2/s3 bucket
