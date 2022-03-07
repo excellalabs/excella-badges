@@ -1,0 +1,33 @@
+Badging Notes (1/21)
+
+Jaman will be following up with us in a grooming backlog session to discuss the badging initiative, figuring out schedule for that.
+
+Matt will each out to Ed Gaughran
+
+Primarily Explore, potential slack integration down the line.
+
+Build out badging service that can be integrated into explore.
+
+Badging service potentially node back-end javascript application that integrates with explore. Will be its own API.
+
+What do we need for the data?
+Queries, CRUD, what are the fields for the Badge object? 
+
+Still researching other company badge implementation.
+
+Nick will look into Slack API integration.
+
+Nick will add notes to repository (https://github.com/excellalabs/excella-badges)
+
+Give read/write access to Explore.
+
+Reach out to JSCA eventually to see folks who want to learn NEST.
+
+Slack API Integration Reference Notes: 
+First build an app through: 
+https://api.slack.com/start/planning
+https://api.slack.com/apis/connections/events-api
+https://api.slack.com/events
+https://api.slack.com/methods/users.profile.set (most likely relevant to update profile where badge info is maintained)
+https://github.com/slackapi/bolt-js
+https://api.slack.com/apps?new_app=1
