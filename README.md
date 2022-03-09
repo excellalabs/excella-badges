@@ -4,11 +4,14 @@
 
 #### This repo consists of two main parts:
 
-I. App
+### I. App
 
-##### A dockerized web application containing a front-end management app and a NEST backend with PostGres
+    A dockerized web application containing a front-end management app and a NEST backend with PostGres
 
-II. Documentation 
+### II. Documentation 
 
-##### The documentation repo containing all of the brainstorming ideas, meeting notes, and research notes associated with this project
+    The documentation repo containing all of the brainstorming ideas, meeting notes, and research notes associated with this project
 
+### III. Meeting Notes
+
+    Meeting notes section to keep track of discussions (both in team and other teams)
