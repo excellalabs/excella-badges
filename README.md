@@ -1,6 +1,5 @@
 ## Excella Badging System
 
-![logo](https://user-images.githubusercontent.com/32392091/157971775-95366c04-eb07-4555-b28a-bdf91e7101b2.png)
 
 
 ### The badging system is an initative of the capability team to build a fun way of communicating interests, capabilities, and skill levels in various ways, through the use of digital badges
