@@ -24,7 +24,7 @@ AppModule = __decorate([
                 envFilePath: './env/development.env',
             }),
             nestjs_session_1.SessionModule.forRoot({
-                session: { secret: 'jeopardysecret' },
+                session: { secret: 'excellarulz' },
             }),
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'sqlite',

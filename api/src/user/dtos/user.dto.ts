@@ -9,4 +9,19 @@ export class UserDto {
 
     @Exclude()
     password: string;
+
+    @Expose()
+    firstName: string;
+
+    @Expose()
+    lastName: string;
+
+    @Expose()
+    title: string;
+
+    @Expose()
+    role: string;
+
+    @Expose()
+    archived: boolean;
 }

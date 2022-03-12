@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("../user/user.service");
 const crypto_1 = require("crypto");
 const util_1 = require("util");
+const create_user_dto_1 = require("../user/dtos/create-user.dto");
 const scrypt = (0, util_1.promisify)(crypto_1.scrypt);
 let AuthService = class AuthService {
     constructor(usersService) {
@@ -27,7 +28,7 @@ let AuthService = class AuthService {
         const salt = (0, crypto_1.randomBytes)(8).toString('hex');
         const hash = (await scrypt(password, salt, 32));
         const result = salt + '.' + hash.toString('hex');
-        return await this.usersService.create(email, result);
+        return await this.usersService.create(new create_user_dto_1.CreateUserDto(email, result));
     }
     async authenticate(email, password) {
         const [user] = await this.usersService.findByEmail(email);

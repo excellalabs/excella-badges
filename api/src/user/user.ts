@@ -1,3 +1,4 @@
+import { IsOptional } from 'class-validator';
 import { AfterInsert, AfterUpdate, AfterRemove, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -6,7 +7,27 @@ export class User {
     id: number;
 
     @Column()
+    @IsOptional()
+    firstName: string;
+
+    @Column()
+    @IsOptional()
+    lastName: string;
+
+    @Column()
     email: string;
+
+    @Column()
+    @IsOptional()
+    title: string;
+
+    @Column()
+    @IsOptional()
+    role: string;
+
+    @Column()
+    @IsOptional()
+    archived: boolean;
 
     @Column()
     password: string;

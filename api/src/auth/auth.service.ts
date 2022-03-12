@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { UserService } from 'src/user/user.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
+import { CreateUserDto } from '../user/dtos/create-user.dto'
 
 const scrypt = promisify(_scrypt);
 
@@ -22,7 +23,7 @@ export class AuthService {
         const result = salt + '.' + hash.toString('hex');
         
         // Create new user and save
-        return await this.usersService.create(email, result)
+        return await this.usersService.create(new CreateUserDto(email, result))
     }
 
     /**

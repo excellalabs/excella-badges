@@ -25,15 +25,10 @@ let UserController = class UserController {
         this.userService = userService;
         this.authService = authService;
     }
-    async signup(body, session) {
-        const user = await this.authService.signup(body.email, body.password);
-        session.userId = user.id;
-        session.save((err) => {
-            console.log(err ? err : 'New user registered: ', user);
-        });
-        return user;
+    async create(newUser) {
+        return await this.userService.create(newUser);
     }
-    async signin(body, session) {
+    async login(body, session) {
         const user = await this.authService.authenticate(body.email, body.password);
         session.userId = user.id;
         session.save((err) => {
@@ -63,23 +58,22 @@ let UserController = class UserController {
     }
 };
 __decorate([
-    (0, common_1.Post)('/signup'),
+    (0, common_1.Post)('/create'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)('/login'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Session)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto, Object]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "signup", null);
+], UserController.prototype, "login", null);
 __decorate([
-    (0, common_1.Post)('/signin'),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Session)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto, Object]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "signin", null);
-__decorate([
-    (0, common_1.Post)('/signout'),
+    (0, common_1.Post)('/logout'),
     __param(0, (0, common_1.Session)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

@@ -25,5 +25,25 @@ __decorate([
     (0, class_transformer_1.Exclude)(),
     __metadata("design:type", String)
 ], UserDto.prototype, "password", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    __metadata("design:type", String)
+], UserDto.prototype, "firstName", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    __metadata("design:type", String)
+], UserDto.prototype, "lastName", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    __metadata("design:type", String)
+], UserDto.prototype, "title", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    __metadata("design:type", String)
+], UserDto.prototype, "role", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    __metadata("design:type", Boolean)
+], UserDto.prototype, "archived", void 0);
 exports.UserDto = UserDto;
 //# sourceMappingURL=user.dto.js.map

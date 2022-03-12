@@ -12,17 +12,13 @@ export class UserController {
     constructor(private userService: UserService, private authService: AuthService){}
 
     /**
-     * Create new users
-     * @param body New user
+     * Creates a new user from user management
+     * @param body 
+     * @returns authenticated user
      */
-    @Post('/signup')
-    async signup(@Body() body: CreateUserDto, @Session() session){
-        const user = await this.authService.signup(body.email, body.password)
-        session.userId = user.id
-        session.save((err) => {
-            console.log(err ? err : 'New user registered: ',user);
-        })
-        return user;
+    @Post('/create')
+    async create(@Body() newUser: CreateUserDto) {
+        return await this.userService.create(newUser)
     }
 
     /**
@@ -30,8 +26,8 @@ export class UserController {
      * @param body 
      * @returns authenticated user
      */
-    @Post('/signin')
-    async signin(@Body() body: CreateUserDto, @Session() session) {
+    @Post('/login')
+    async login(@Body() body: CreateUserDto, @Session() session) {
         const user = await this.authService.authenticate(body.email, body.password);
             session.userId = user.id
             session.save((err) => {
@@ -40,10 +36,10 @@ export class UserController {
     }
 
     /**
-     * Signs out user from session
+     * Logs a user out of the session
      * @param session 
      */
-    @Post('/signout')
+    @Post('/logout')
     signOut(@Session() session: any) {
         session.userId = null;
     }

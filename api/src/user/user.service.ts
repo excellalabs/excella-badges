@@ -2,6 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user';
+import { CreateUserDto } from './dtos/create-user.dto'
+import { randomBytes, scrypt as _scrypt } from 'crypto';
+import { promisify } from 'util';
+
+const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class UserService {
@@ -9,11 +14,15 @@ export class UserService {
         this.repo = repo;
     }
 
-    create(email: string, password: string) {
-        const user = this.repo.create({ email, password });
+    async create(newUser: CreateUserDto) {
+        const salt = randomBytes(8).toString('hex');
+        const hash = (await scrypt(newUser.password, salt, 32)) as Buffer;
+        const hashedPassword = salt + '.' + hash.toString('hex');
+        newUser.password = hashedPassword
+
+        const user = this.repo.create(newUser);
         return this.repo.save(user)
     }
-
 
     findOne(id: number){
         if(!id)

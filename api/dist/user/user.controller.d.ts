@@ -6,8 +6,8 @@ export declare class UserController {
     private userService;
     private authService;
     constructor(userService: UserService, authService: AuthService);
-    signup(body: CreateUserDto, session: any): Promise<import("./user").User>;
-    signin(body: CreateUserDto, session: any): Promise<void>;
+    create(newUser: CreateUserDto): Promise<import("./user").User>;
+    login(body: CreateUserDto, session: any): Promise<void>;
     signOut(session: any): void;
     getCurrentUser(session: any): Promise<import("./user").User>;
     getAllUsers(): Promise<import("./user").User[]>;

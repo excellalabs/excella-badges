@@ -1,19 +1,15 @@
-### Create a new user
-POST http://localhost:3000/user/signup
+### Create new user
+POST http://localhost:3000/user/create
 Content-Type: application/json
 
 {
-    "email": "ddfdfd.brown@excella.com",
-    "password": "mynewpassword"
-}
-
-### Login
-POST http://localhost:3000/user/signin
-Content-Type: application/json
-
-{
-    "email": "blah.brown@excella.com",
-    "password": "mynewpassword"
+    "email": "john.smith@excella.com",
+    "password": "mynewpassword",
+    "firstName": "John",
+    "lastName": "Smith",
+    "title": "Software Consultant",
+    "role": "Java Developer",
+    "archived": false
 }
 
 ### Sign out
@@ -23,7 +19,7 @@ POST http://localhost:3000/user/signout
 GET http://localhost:3000/user/currentUser
 
 ### Delete an existing user
-DELETE http://localhost:3000/user/4
+DELETE http://localhost:3000/user/2
 
 ### Get all users
 GET http://localhost:3000/user

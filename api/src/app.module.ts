@@ -7,6 +7,16 @@ import { NestSessionOptions, SessionModule } from 'nestjs-session';
 import { ConfigModule } from '@nestjs/config';
 
 import { User } from './user/user';
+import { BadgeModule } from './badge/badge.module';
+import { CategoryModule } from './category/category.module';
+import { CapabilityController } from './capability/capability.controller';
+import { CapabilityModule } from './capability/capability.module';
+import { BadgetypeModule } from './badgetype/badgetype.module';
+import { SkilllevelController } from './skilllevel/skilllevel.controller';
+import { SkilllevelModule } from './skilllevel/skilllevel.module';
+import { BadgerequirementsModule } from './badgerequirements/badgerequirements.module';
+import { AchievementsModule } from './achievements/achievements.module';
+import { AchievementschecklistModule } from './achievementschecklist/achievementschecklist.module';
 
 @Module({
   imports: [
@@ -33,9 +43,17 @@ import { User } from './user/user';
       entities: [User],
       synchronize: true
     }),
-    UserModule
+    UserModule,
+    BadgeModule,
+    CategoryModule,
+    CapabilityModule,
+    BadgetypeModule,
+    SkilllevelModule,
+    BadgerequirementsModule,
+    AchievementsModule,
+    AchievementschecklistModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, CapabilityController, SkilllevelController],
   providers: [AppService],
 })
 export class AppModule {}

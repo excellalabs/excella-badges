@@ -17,13 +17,20 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const user_1 = require("./user");
+const crypto_1 = require("crypto");
+const util_1 = require("util");
+const scrypt = (0, util_1.promisify)(crypto_1.scrypt);
 let UserService = class UserService {
     constructor(repo) {
         this.repo = repo;
         this.repo = repo;
     }
-    create(email, password) {
-        const user = this.repo.create({ email, password });
+    async create(newUser) {
+        const salt = (0, crypto_1.randomBytes)(8).toString('hex');
+        const hash = (await scrypt(newUser.password, salt, 32));
+        const hashedPassword = salt + '.' + hash.toString('hex');
+        newUser.password = hashedPassword;
+        const user = this.repo.create(newUser);
         return this.repo.save(user);
     }
     findOne(id) {
