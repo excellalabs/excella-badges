@@ -1,0 +1,27 @@
+### Create new category
+POST http://localhost:3000/category/create
+Content-Type: application/json
+
+{
+    "name": "Development"
+}
+
+### Get all categories
+GET http://localhost:3000/category
+
+### Get a category by id
+GET http://localhost:3000/category/id/6
+
+### Get user by name
+GET http://localhost:3000/category/name/Development
+
+### Delete an existing user
+DELETE http://localhost:3000/category/15
+
+### Update a category
+PATCH http://localhost:3000/category/8
+Content-Type: application/json
+
+{
+    "name": "Development"
+}

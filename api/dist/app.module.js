@@ -15,6 +15,17 @@ const typeorm_1 = require("@nestjs/typeorm");
 const nestjs_session_1 = require("nestjs-session");
 const config_1 = require("@nestjs/config");
 const user_1 = require("./user/user");
+const category_1 = require("./category/category");
+const badge_module_1 = require("./badge/badge.module");
+const category_module_1 = require("./category/category.module");
+const capability_controller_1 = require("./capability/capability.controller");
+const capability_module_1 = require("./capability/capability.module");
+const badgetype_module_1 = require("./badgetype/badgetype.module");
+const skilllevel_controller_1 = require("./skilllevel/skilllevel.controller");
+const skilllevel_module_1 = require("./skilllevel/skilllevel.module");
+const badgerequirements_module_1 = require("./badgerequirements/badgerequirements.module");
+const achievements_module_1 = require("./achievements/achievements.module");
+const achievementschecklist_module_1 = require("./achievementschecklist/achievementschecklist.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -29,12 +40,20 @@ AppModule = __decorate([
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'sqlite',
                 database: 'db.sqlite',
-                entities: [user_1.User],
+                entities: [user_1.User, category_1.Category],
                 synchronize: true
             }),
-            user_module_1.UserModule
+            user_module_1.UserModule,
+            badge_module_1.BadgeModule,
+            category_module_1.CategoryModule,
+            capability_module_1.CapabilityModule,
+            badgetype_module_1.BadgetypeModule,
+            skilllevel_module_1.SkilllevelModule,
+            badgerequirements_module_1.BadgerequirementsModule,
+            achievements_module_1.AchievementsModule,
+            achievementschecklist_module_1.AchievementschecklistModule
         ],
-        controllers: [app_controller_1.AppController],
+        controllers: [app_controller_1.AppController, capability_controller_1.CapabilityController, skilllevel_controller_1.SkilllevelController],
         providers: [app_service_1.AppService],
     })
 ], AppModule);

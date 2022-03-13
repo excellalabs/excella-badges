@@ -7,6 +7,7 @@ import { NestSessionOptions, SessionModule } from 'nestjs-session';
 import { ConfigModule } from '@nestjs/config';
 
 import { User } from './user/user';
+import { Category } from './category/category';
 import { BadgeModule } from './badge/badge.module';
 import { CategoryModule } from './category/category.module';
 import { CapabilityController } from './capability/capability.controller';
@@ -40,7 +41,7 @@ import { AchievementschecklistModule } from './achievementschecklist/achievement
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User],
+      entities: [User, Category],
       synchronize: true
     }),
     UserModule,

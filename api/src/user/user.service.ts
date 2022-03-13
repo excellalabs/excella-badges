@@ -45,6 +45,7 @@ export class UserService {
             return null
         }
         Object.assign(user, attrs);
+        user.id = id
         return this.repo.save(user);
     }
 
