@@ -1,4 +1,5 @@
-import { AfterInsert, AfterUpdate, AfterRemove, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { AfterInsert, AfterUpdate, AfterRemove, Entity, Column, ManyToOne, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Capability } from 'src/capability/capability';
 
 @Entity()
 export class Category {
@@ -7,6 +8,9 @@ export class Category {
 
     @Column()
     name: string;
+
+    @OneToMany(() => Capability, capability => capability.category)
+    capability: Capability[];
 
     @AfterInsert()
     logEvent() {

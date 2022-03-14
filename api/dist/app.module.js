@@ -16,10 +16,10 @@ const nestjs_session_1 = require("nestjs-session");
 const config_1 = require("@nestjs/config");
 const user_1 = require("./user/user");
 const category_1 = require("./category/category");
-const badge_module_1 = require("./badge/badge.module");
 const category_module_1 = require("./category/category.module");
-const capability_controller_1 = require("./capability/capability.controller");
+const capability_1 = require("./capability/capability");
 const capability_module_1 = require("./capability/capability.module");
+const badge_module_1 = require("./badge/badge.module");
 const badgetype_module_1 = require("./badgetype/badgetype.module");
 const skilllevel_controller_1 = require("./skilllevel/skilllevel.controller");
 const skilllevel_module_1 = require("./skilllevel/skilllevel.module");
@@ -40,7 +40,7 @@ AppModule = __decorate([
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'sqlite',
                 database: 'db.sqlite',
-                entities: [user_1.User, category_1.Category],
+                entities: [user_1.User, category_1.Category, capability_1.Capability],
                 synchronize: true
             }),
             user_module_1.UserModule,
@@ -53,7 +53,10 @@ AppModule = __decorate([
             achievements_module_1.AchievementsModule,
             achievementschecklist_module_1.AchievementschecklistModule
         ],
-        controllers: [app_controller_1.AppController, capability_controller_1.CapabilityController, skilllevel_controller_1.SkilllevelController],
+        controllers: [
+            app_controller_1.AppController,
+            skilllevel_controller_1.SkilllevelController
+        ],
         providers: [app_service_1.AppService],
     })
 ], AppModule);

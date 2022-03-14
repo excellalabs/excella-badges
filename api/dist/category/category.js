@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Category = void 0;
 const typeorm_1 = require("typeorm");
+const capability_1 = require("../capability/capability");
 let Category = class Category {
     logEvent() {
         console.log("New category created: ", this.name);
@@ -30,6 +31,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Category.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => capability_1.Capability, capability => capability.category),
+    __metadata("design:type", Array)
+], Category.prototype, "capability", void 0);
 __decorate([
     (0, typeorm_1.AfterInsert)(),
     __metadata("design:type", Function),

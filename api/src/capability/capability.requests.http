@@ -1,0 +1,28 @@
+### Create new category
+POST http://localhost:3000/capability/create
+Content-Type: application/json
+
+{
+    "name": "Data Visual",
+    "category": 1
+}
+
+### Get all capabilities
+GET http://localhost:3000/capability
+
+# ### Get a category by id
+# GET http://localhost:3000/category/id/6
+
+# ### Get user by name
+# GET http://localhost:3000/category/name/Development
+
+### Delete an existing user
+DELETE http://localhost:3000/capability/3
+
+# ### Update a category
+# PATCH http://localhost:3000/category/8
+# Content-Type: application/json
+
+# {
+#     "name": "Development"
+# }
