@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CapabilityModule } from './capability/capability.module';
 import { MainmenuComponent } from './mainmenu/mainmenu.component';
 
 const routes: Routes = [
@@ -10,6 +9,10 @@ const routes: Routes = [
   {
     path: 'capability',
     loadChildren: () => import('./capability/capability.module').then(m => m.CapabilityModule),
+  },
+  {
+    path: 'category',
+    loadChildren: () => import('./category/category.module').then(m => m.CategoryModule),
   },
 ];
 

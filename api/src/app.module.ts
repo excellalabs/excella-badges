@@ -8,9 +8,6 @@ import { ConfigModule } from '@nestjs/config';
 
 import { User } from './user/user';
 
-import { Category } from './category/category';
-import { CategoryModule } from './category/category.module';
-
 import { Capability } from './capability/capability';
 import { CapabilityModule } from './capability/capability.module';
 
@@ -18,8 +15,8 @@ import { BadgeModule } from './badge/badge.module';
 
 import { BadgetypeModule } from './badgetype/badgetype.module';
 
-import { SkilllevelController } from './skilllevel/skilllevel.controller';
-import { SkilllevelModule } from './skilllevel/skilllevel.module';
+import { SkillLevel } from './skilllevel/skilllevel'
+import { SkillLevelModule } from './skilllevel/skilllevel.module';
 
 import { BadgerequirementsModule } from './badgerequirements/badgerequirements.module';
 
@@ -51,22 +48,19 @@ import { AchievementschecklistModule } from './achievementschecklist/achievement
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Category, Capability],
+      entities: [User, Capability, SkillLevel],
       synchronize: true
     }),
     UserModule,
     BadgeModule,
-    CategoryModule,
     CapabilityModule,
     BadgetypeModule,
-    SkilllevelModule,
+    SkillLevelModule,
     BadgerequirementsModule,
     AchievementsModule,
     AchievementschecklistModule
   ],
-  controllers: [
-    AppController, 
-    SkilllevelController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

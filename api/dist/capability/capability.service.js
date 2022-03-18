@@ -22,9 +22,6 @@ let CapabilityService = class CapabilityService {
         this.repo = repo;
         this.repo = repo;
     }
-    async create(newCapability) {
-        return this.repo.save(this.repo.create(newCapability));
-    }
     findOne(id) {
         if (!id)
             return null;
@@ -35,6 +32,19 @@ let CapabilityService = class CapabilityService {
     }
     findAll() {
         return this.repo.find();
+    }
+    async create(newCapability) {
+        return this.repo.save(this.repo.create(newCapability));
+    }
+    async update(id, attrs) {
+        const capability = await this.findOne(id);
+        if (!capability) {
+            console.error('Update capability: capability not found');
+            return null;
+        }
+        Object.assign(capability, attrs);
+        capability.id = id;
+        return this.repo.save(capability);
     }
     async remove(id) {
         const capability = await this.findOne(id);

@@ -1,6 +1,6 @@
 import { Expose } from "class-transformer";
 import { IsOptional } from "class-validator";
-import { CategoryDto } from 'src/category/dtos/category.dto';
+// import { CategoryDto } from 'src/category/dtos/category.dto';
 
 export class UpdateCapabilityDto {
     @Expose()
@@ -10,7 +10,7 @@ export class UpdateCapabilityDto {
     @IsOptional()
     name: string
 
-    @Expose()
-    @IsOptional()
-    category: CategoryDto
+    // @Expose()
+    // @IsOptional()
+    // category: CategoryDto
 }

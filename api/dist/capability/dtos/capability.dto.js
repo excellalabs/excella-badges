@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CapabilityDto = void 0;
 const class_transformer_1 = require("class-transformer");
-const category_dto_1 = require("../../category/dtos/category.dto");
 class CapabilityDto {
 }
 __decorate([
@@ -22,9 +21,5 @@ __decorate([
     (0, class_transformer_1.Expose)(),
     __metadata("design:type", String)
 ], CapabilityDto.prototype, "name", void 0);
-__decorate([
-    (0, class_transformer_1.Expose)(),
-    __metadata("design:type", category_dto_1.CategoryDto)
-], CapabilityDto.prototype, "category", void 0);
 exports.CapabilityDto = CapabilityDto;
 //# sourceMappingURL=capability.dto.js.map

@@ -1,0 +1,28 @@
+### Create new skilllevel
+POST http://localhost:3000/skilllevel
+Content-Type: application/json
+
+{
+    "name": "asdf",
+    "category": 1
+}
+
+### Get all capabilities
+GET http://localhost:3000/skilllevel
+
+### Get a skilllevel by id
+GET http://localhost:3000/skilllevel/id/6
+
+### Get skilllevel by name
+GET http://localhost:3000/skilllevel/name/Data
+
+### Delete a skilllevel by id
+DELETE http://localhost:3000/skilllevel/9
+
+### Update a skilllevel
+PATCH http://localhost:3000/skilllevel/5
+Content-Type: application/json
+
+{
+    "name": "Design"
+}

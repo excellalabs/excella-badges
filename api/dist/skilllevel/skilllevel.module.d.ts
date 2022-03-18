@@ -1,2 +1,2 @@
-export declare class SkilllevelModule {
+export declare class SkillLevelModule {
 }

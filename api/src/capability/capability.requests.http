@@ -1,28 +1,28 @@
-### Create new category
-POST http://localhost:3000/capability/create
+### Create new capability
+POST http://localhost:3000/capability
 Content-Type: application/json
 
 {
-    "name": "Data Visual",
+    "name": "asdf",
     "category": 1
 }
 
 ### Get all capabilities
 GET http://localhost:3000/capability
 
-# ### Get a category by id
-# GET http://localhost:3000/category/id/6
+### Get a capability by id
+GET http://localhost:3000/capability/id/6
 
-# ### Get user by name
-# GET http://localhost:3000/category/name/Development
+### Get capability by name
+GET http://localhost:3000/capability/name/Data
 
-### Delete an existing user
-DELETE http://localhost:3000/capability/3
+### Delete a capability by id
+DELETE http://localhost:3000/capability/9
 
-# ### Update a category
-# PATCH http://localhost:3000/category/8
-# Content-Type: application/json
+### Update a capability
+PATCH http://localhost:3000/capability/5
+Content-Type: application/json
 
-# {
-#     "name": "Development"
-# }
+{
+    "name": "Design"
+}

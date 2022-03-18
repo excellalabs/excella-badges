@@ -16,40 +16,73 @@ exports.CapabilityController = void 0;
 const common_1 = require("@nestjs/common");
 const capability_service_1 = require("./capability.service");
 const create_capability_dto_1 = require("./dtos/create-capability.dto");
+const update_capability_dto_1 = require("./dtos/update-capability.dto");
 let CapabilityController = class CapabilityController {
     constructor(capabilityService) {
         this.capabilityService = capabilityService;
     }
-    async create(newCapability) {
-        return await this.capabilityService.create(newCapability);
+    findOne(id) {
+        return this.capabilityService.findOne(id);
     }
-    getAllCapabilities() {
+    findByName(name) {
+        console.log("finding by name");
+        return this.capabilityService.findByName(name);
+    }
+    findAll() {
         return this.capabilityService.findAll();
     }
-    removeUser(id) {
+    async create(createDto) {
+        return await this.capabilityService.create(createDto);
+    }
+    update(id, body) {
+        this.capabilityService.update(parseInt(id), body);
+    }
+    delete(id) {
         return this.capabilityService.remove(parseInt(id));
     }
 };
 __decorate([
-    (0, common_1.Post)('/create'),
+    (0, common_1.Get)('/id/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], CapabilityController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)('/name/:name'),
+    __param(0, (0, common_1.Param)('name')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], CapabilityController.prototype, "findByName", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], CapabilityController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_capability_dto_1.CreateCapabilityDto]),
     __metadata("design:returntype", Promise)
 ], CapabilityController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Patch)('/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String, update_capability_dto_1.UpdateCapabilityDto]),
     __metadata("design:returntype", void 0)
-], CapabilityController.prototype, "getAllCapabilities", null);
+], CapabilityController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], CapabilityController.prototype, "removeUser", null);
+], CapabilityController.prototype, "delete", null);
 CapabilityController = __decorate([
     (0, common_1.Controller)('capability'),
     __metadata("design:paramtypes", [capability_service_1.CapabilityService])

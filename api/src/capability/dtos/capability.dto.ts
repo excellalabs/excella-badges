@@ -1,5 +1,5 @@
 import { Expose } from "class-transformer";
-import { CategoryDto } from 'src/category/dtos/category.dto';
+// import { CategoryDto } from 'src/category/dtos/category.dto';
 
 export class CapabilityDto {
     @Expose()
@@ -8,6 +8,6 @@ export class CapabilityDto {
     @Expose()
     name: string;
 
-    @Expose()
-    category: CategoryDto;
+    // @Expose()
+    // category: CategoryDto;
 }

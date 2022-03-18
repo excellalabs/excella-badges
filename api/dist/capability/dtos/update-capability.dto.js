@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateCapabilityDto = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-const category_dto_1 = require("../../category/dtos/category.dto");
 class UpdateCapabilityDto {
 }
 __decorate([
@@ -24,10 +23,5 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateCapabilityDto.prototype, "name", void 0);
-__decorate([
-    (0, class_transformer_1.Expose)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", category_dto_1.CategoryDto)
-], UpdateCapabilityDto.prototype, "category", void 0);
 exports.UpdateCapabilityDto = UpdateCapabilityDto;
 //# sourceMappingURL=update-capability.dto.js.map
