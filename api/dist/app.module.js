@@ -18,6 +18,7 @@ const user_1 = require("./user/user");
 const capability_1 = require("./capability/capability");
 const capability_module_1 = require("./capability/capability.module");
 const badge_module_1 = require("./badge/badge.module");
+const badgetype_1 = require("./badgetype/badgetype");
 const badgetype_module_1 = require("./badgetype/badgetype.module");
 const skilllevel_1 = require("./skilllevel/skilllevel");
 const skilllevel_module_1 = require("./skilllevel/skilllevel.module");
@@ -38,13 +39,13 @@ AppModule = __decorate([
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'sqlite',
                 database: 'db.sqlite',
-                entities: [user_1.User, capability_1.Capability, skilllevel_1.SkillLevel],
+                entities: [user_1.User, capability_1.Capability, skilllevel_1.SkillLevel, badgetype_1.BadgeType],
                 synchronize: true
             }),
             user_module_1.UserModule,
             badge_module_1.BadgeModule,
             capability_module_1.CapabilityModule,
-            badgetype_module_1.BadgetypeModule,
+            badgetype_module_1.BadgeTypeModule,
             skilllevel_module_1.SkillLevelModule,
             badgerequirements_module_1.BadgerequirementsModule,
             achievements_module_1.AchievementsModule,

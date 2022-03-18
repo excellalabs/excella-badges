@@ -1,2 +1,2 @@
-export declare class BadgetypeModule {
+export declare class BadgeTypeModule {
 }

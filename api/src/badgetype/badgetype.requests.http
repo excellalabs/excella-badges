@@ -1,0 +1,24 @@
+### Create new badgetype
+POST http://localhost:3000/badgetype
+Content-Type: application/json
+
+{
+    "name": "ASDasd"
+}
+
+### Get all badgetypes
+GET http://localhost:3000/badgetype
+
+### Get a badgetype by id
+GET http://localhost:3000/badgetype/id/2
+
+### Delete a badgetype by id
+DELETE http://localhost:3000/badgetype/4
+
+### Update a badgetype
+PATCH http://localhost:3000/badgetype/4
+Content-Type: application/json
+
+{
+    "name": "Expert"
+}

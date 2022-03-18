@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BadgetypeController } from './badgetype.controller';
+import { BadgeTypeController } from './badgetype.controller';
 
-describe('BadgetypeController', () => {
-  let controller: BadgetypeController;
+describe('BadgeTypeController', () => {
+  let controller: BadgeTypeController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [BadgetypeController],
+      controllers: [BadgeTypeController],
     }).compile();
 
-    controller = module.get<BadgetypeController>(BadgetypeController);
+    controller = module.get<BadgeTypeController>(BadgeTypeController);
   });
 
   it('should be defined', () => {

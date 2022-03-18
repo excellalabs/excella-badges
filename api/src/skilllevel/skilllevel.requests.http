@@ -3,7 +3,7 @@ POST http://localhost:3000/skilllevel
 Content-Type: application/json
 
 {
-    "name": "asdf",
+    "name": "Advanced",
     "category": 1
 }
 
@@ -11,18 +11,18 @@ Content-Type: application/json
 GET http://localhost:3000/skilllevel
 
 ### Get a skilllevel by id
-GET http://localhost:3000/skilllevel/id/6
+GET http://localhost:3000/skilllevel/id/2
 
 ### Get skilllevel by name
-GET http://localhost:3000/skilllevel/name/Data
+GET http://localhost:3000/skilllevel/name/Beginner
 
 ### Delete a skilllevel by id
-DELETE http://localhost:3000/skilllevel/9
+DELETE http://localhost:3000/skilllevel/8
 
 ### Update a skilllevel
 PATCH http://localhost:3000/skilllevel/5
 Content-Type: application/json
 
 {
-    "name": "Design"
+    "name": "Expert"
 }

@@ -6,15 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BadgetypeModule = void 0;
+exports.BadgeTypeModule = void 0;
 const common_1 = require("@nestjs/common");
 const badgetype_controller_1 = require("./badgetype.controller");
-let BadgetypeModule = class BadgetypeModule {
+const badgetype_service_1 = require("./badgetype.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const badgetype_1 = require("./badgetype");
+let BadgeTypeModule = class BadgeTypeModule {
 };
-BadgetypeModule = __decorate([
+BadgeTypeModule = __decorate([
     (0, common_1.Module)({
-        controllers: [badgetype_controller_1.BadgetypeController]
+        imports: [typeorm_1.TypeOrmModule.forFeature([badgetype_1.BadgeType])],
+        controllers: [badgetype_controller_1.BadgeTypeController],
+        providers: [badgetype_service_1.BadgeTypeService]
     })
-], BadgetypeModule);
-exports.BadgetypeModule = BadgetypeModule;
+], BadgeTypeModule);
+exports.BadgeTypeModule = BadgeTypeModule;
 //# sourceMappingURL=badgetype.module.js.map
