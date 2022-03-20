@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'category',
     loadChildren: () => import('./category/category.module').then(m => m.CategoryModule),
   },
+  {
+    path: 'skilllevel',
+    loadChildren: () => import('./skilllevel/skilllevel.module').then(m => m.SkilllevelModule),
+  },
 ];
 
 @NgModule({

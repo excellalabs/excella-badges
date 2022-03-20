@@ -7,6 +7,8 @@ import { CapabilityModule } from './capability/capability.module';
 import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { CategoryModule } from './category/category.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgMaterialModule } from './ng-material/ng-material.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     CapabilityModule,
     CategoryModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    NgMaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

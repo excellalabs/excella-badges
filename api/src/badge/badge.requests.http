@@ -3,14 +3,16 @@ POST http://localhost:3000/badge
 Content-Type: application/json
 
 {
-    "name": "ASDasd"
+    "name": "New Badge",
+    "skill": 1,
+    "badgeType": 1
 }
 
 ### Get all badges
 GET http://localhost:3000/badge
 
 ### Get a badge by id
-GET http://localhost:3000/badge/id/2
+GET http://localhost:3000/badge/id/1
 
 ### Delete a badge by id
 DELETE http://localhost:3000/badge/4
