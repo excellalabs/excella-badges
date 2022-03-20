@@ -21,5 +21,9 @@ __decorate([
     (0, class_transformer_1.Expose)(),
     __metadata("design:type", String)
 ], CapabilityDto.prototype, "name", void 0);
+__decorate([
+    (0, class_transformer_1.Exclude)(),
+    __metadata("design:type", Array)
+], CapabilityDto.prototype, "skill", void 0);
 exports.CapabilityDto = CapabilityDto;
 //# sourceMappingURL=capability.dto.js.map

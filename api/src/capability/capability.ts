@@ -1,5 +1,5 @@
 import { AfterInsert, AfterUpdate, AfterRemove, Entity, Column, OneToMany, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-// import { Category } from 'src/category/category';
+import { Skill } from 'src/skill/skill';
 
 @Entity()
 export class Capability {
@@ -9,8 +9,8 @@ export class Capability {
     @Column()
     name: string;
 
-    // @ManyToOne(() => Category, category => category.capability)
-    // category: Category;
+    @OneToMany(() => Skill, skill => skill.capability)
+    skill: Skill[];
 
     @AfterInsert()
     logEvent() {

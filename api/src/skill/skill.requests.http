@@ -1,0 +1,35 @@
+### Create new skill
+POST http://localhost:3000/skill
+Content-Type: application/json
+
+{
+    "name": "test2",
+    "capability": 6,
+    "skilllevel": 6
+}
+
+### Get all skills
+GET http://localhost:3000/skill
+
+### Get a skill by id
+GET http://localhost:3000/skill/id/5
+
+### Get all skills for a given capabillity
+GET http://localhost:3000/skill/capability/1
+
+### Get all skills of a given skill level
+GET http://localhost:3000/skill/skilllevel/1
+
+### Get skill by name
+GET http://localhost:3000/skill/name/Beginner
+
+### Delete a skill by id
+DELETE http://localhost:3000/skill/6
+
+### Update a skill
+PATCH http://localhost:3000/skill/5
+Content-Type: application/json
+
+{
+    "name": "Expert"
+}

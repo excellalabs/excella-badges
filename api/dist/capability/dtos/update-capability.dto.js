@@ -23,5 +23,9 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateCapabilityDto.prototype, "name", void 0);
+__decorate([
+    (0, class_transformer_1.Exclude)(),
+    __metadata("design:type", Array)
+], UpdateCapabilityDto.prototype, "skill", void 0);
 exports.UpdateCapabilityDto = UpdateCapabilityDto;
 //# sourceMappingURL=update-capability.dto.js.map

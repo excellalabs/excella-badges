@@ -3,8 +3,7 @@ POST http://localhost:3000/capability
 Content-Type: application/json
 
 {
-    "name": "asdf",
-    "category": 1
+    "name": "Data Science"
 }
 
 ### Get all capabilities

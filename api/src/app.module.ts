@@ -11,7 +11,10 @@ import { User } from './user/user';
 import { Capability } from './capability/capability';
 import { CapabilityModule } from './capability/capability.module';
 
-import { BadgeModule } from './badge/badge.module';
+// import { BadgeModule } from './badge/badge.module';
+
+import { Skill } from './skill/skill';
+import { SkillModule } from './skill/skill.module';
 
 import { BadgeType } from './badgetype/badgetype';
 import { BadgeTypeModule } from './badgetype/badgetype.module';
@@ -49,17 +52,17 @@ import { AchievementschecklistModule } from './achievementschecklist/achievement
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Capability, SkillLevel, BadgeType],
+      entities: [User, Capability, Skill, SkillLevel, BadgeType],
       synchronize: true
     }),
     UserModule,
-    BadgeModule,
     CapabilityModule,
     BadgeTypeModule,
     SkillLevelModule,
     BadgerequirementsModule,
     AchievementsModule,
-    AchievementschecklistModule
+    AchievementschecklistModule,
+    SkillModule
   ],
   controllers: [AppController],
   providers: [AppService],

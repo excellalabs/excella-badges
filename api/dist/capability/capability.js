@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Capability = void 0;
 const typeorm_1 = require("typeorm");
+const skill_1 = require("../skill/skill");
 let Capability = class Capability {
     logEvent() {
         console.log("New capability created: ", this.name);
@@ -30,6 +31,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Capability.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => skill_1.Skill, skill => skill.capability),
+    __metadata("design:type", Array)
+], Capability.prototype, "skill", void 0);
 __decorate([
     (0, typeorm_1.AfterInsert)(),
     __metadata("design:type", Function),

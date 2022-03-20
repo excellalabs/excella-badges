@@ -3,11 +3,10 @@ POST http://localhost:3000/skilllevel
 Content-Type: application/json
 
 {
-    "name": "Advanced",
-    "category": 1
+    "name": "Expert"
 }
 
-### Get all capabilities
+### Get all skilllevels
 GET http://localhost:3000/skilllevel
 
 ### Get a skilllevel by id

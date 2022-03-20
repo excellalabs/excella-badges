@@ -1,5 +1,5 @@
-import { Expose } from "class-transformer";
-// import { CategoryDto } from 'src/category/dtos/category.dto';
+import { Exclude, Expose } from "class-transformer";
+import { Skill } from 'src/skill/skill';
 
 export class CapabilityDto {
     @Expose()
@@ -8,6 +8,8 @@ export class CapabilityDto {
     @Expose()
     name: string;
 
+    @Exclude()
+    skill: Skill[]
     // @Expose()
     // category: CategoryDto;
 }

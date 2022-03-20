@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCapabilityDto = void 0;
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class CreateCapabilityDto {
 }
@@ -17,5 +18,9 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCapabilityDto.prototype, "name", void 0);
+__decorate([
+    (0, class_transformer_1.Exclude)(),
+    __metadata("design:type", Array)
+], CreateCapabilityDto.prototype, "skill", void 0);
 exports.CreateCapabilityDto = CreateCapabilityDto;
 //# sourceMappingURL=create-capability.dto.js.map

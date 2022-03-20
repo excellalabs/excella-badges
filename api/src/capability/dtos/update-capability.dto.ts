@@ -1,6 +1,6 @@
-import { Expose } from "class-transformer";
+import { Expose, Exclude } from 'class-transformer';
 import { IsOptional } from "class-validator";
-// import { CategoryDto } from 'src/category/dtos/category.dto';
+import { Skill } from 'src/skill/skill';
 
 export class UpdateCapabilityDto {
     @Expose()
@@ -10,6 +10,8 @@ export class UpdateCapabilityDto {
     @IsOptional()
     name: string
 
+    @Exclude()
+    skill: Skill[]
     // @Expose()
     // @IsOptional()
     // category: CategoryDto

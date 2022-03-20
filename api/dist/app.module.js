@@ -17,7 +17,8 @@ const config_1 = require("@nestjs/config");
 const user_1 = require("./user/user");
 const capability_1 = require("./capability/capability");
 const capability_module_1 = require("./capability/capability.module");
-const badge_module_1 = require("./badge/badge.module");
+const skill_1 = require("./skill/skill");
+const skill_module_1 = require("./skill/skill.module");
 const badgetype_1 = require("./badgetype/badgetype");
 const badgetype_module_1 = require("./badgetype/badgetype.module");
 const skilllevel_1 = require("./skilllevel/skilllevel");
@@ -39,17 +40,17 @@ AppModule = __decorate([
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'sqlite',
                 database: 'db.sqlite',
-                entities: [user_1.User, capability_1.Capability, skilllevel_1.SkillLevel, badgetype_1.BadgeType],
+                entities: [user_1.User, capability_1.Capability, skill_1.Skill, skilllevel_1.SkillLevel, badgetype_1.BadgeType],
                 synchronize: true
             }),
             user_module_1.UserModule,
-            badge_module_1.BadgeModule,
             capability_module_1.CapabilityModule,
             badgetype_module_1.BadgeTypeModule,
             skilllevel_module_1.SkillLevelModule,
             badgerequirements_module_1.BadgerequirementsModule,
             achievements_module_1.AchievementsModule,
-            achievementschecklist_module_1.AchievementschecklistModule
+            achievementschecklist_module_1.AchievementschecklistModule,
+            skill_module_1.SkillModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
