@@ -3,9 +3,9 @@ POST http://localhost:3000/skill
 Content-Type: application/json
 
 {
-    "name": "test2",
-    "capability": 6,
-    "skilllevel": 6
+    "name": "Java",
+    "capability": 1,
+    "skilllevel": 1
 }
 
 ### Get all skills
@@ -24,12 +24,12 @@ GET http://localhost:3000/skill/skilllevel/1
 GET http://localhost:3000/skill/name/Beginner
 
 ### Delete a skill by id
-DELETE http://localhost:3000/skill/6
+DELETE http://localhost:3000/skill/7
 
 ### Update a skill
 PATCH http://localhost:3000/skill/5
 Content-Type: application/json
 
 {
-    "name": "Expert"
+    "name": "Java Spring"
 }

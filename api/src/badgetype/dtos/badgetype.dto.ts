@@ -7,7 +7,4 @@ export class BadgeTypeDto {
 
     @Expose()
     name: string;
-
-    // @Expose()
-    // category: CategoryDto;
 }

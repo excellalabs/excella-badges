@@ -9,8 +9,4 @@ export class UpdateBadgeTypeDto {
     @Expose()
     @IsOptional()
     name: string
-
-    // @Expose()
-    // @IsOptional()
-    // category: CategoryDto
 }

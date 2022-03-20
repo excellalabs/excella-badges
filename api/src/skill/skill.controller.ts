@@ -2,7 +2,6 @@ import { Controller, Session, Get, Post, Body, Patch, Param, Delete, Put, Query 
 import { SkillService } from './skill.service';
 import { CreateSkillDto } from './dtos/create-skill.dto';
 import { UpdateSkillDto } from './dtos/update-skill.dto';
-import { QuerySkillDto } from './dtos/query-skill.dto';
 
 // SkillLevel Routes					
 

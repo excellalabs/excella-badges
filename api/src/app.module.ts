@@ -11,7 +11,8 @@ import { User } from './user/user';
 import { Capability } from './capability/capability';
 import { CapabilityModule } from './capability/capability.module';
 
-// import { BadgeModule } from './badge/badge.module';
+import { Badge } from './badge/badge';
+import { BadgeModule } from './badge/badge.module';
 
 import { Skill } from './skill/skill';
 import { SkillModule } from './skill/skill.module';
@@ -22,13 +23,15 @@ import { BadgeTypeModule } from './badgetype/badgetype.module';
 import { SkillLevel } from './skilllevel/skilllevel'
 import { SkillLevelModule } from './skilllevel/skilllevel.module';
 
+import ImageFile from './common/imageUpload/imageUpload';
+import ImageUploadService from './common/imageUpload/imageUpload.service'
+
+
 import { BadgerequirementsModule } from './badgerequirements/badgerequirements.module';
 
 import { AchievementsModule } from './achievements/achievements.module';
 
 import { AchievementschecklistModule } from './achievementschecklist/achievementschecklist.module';
-
-
 
 @Module({
   imports: [
@@ -52,7 +55,7 @@ import { AchievementschecklistModule } from './achievementschecklist/achievement
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Capability, Skill, SkillLevel, BadgeType],
+      entities: [User, Capability, Skill, SkillLevel, BadgeType, Badge, ImageFile],
       synchronize: true
     }),
     UserModule,
@@ -62,7 +65,8 @@ import { AchievementschecklistModule } from './achievementschecklist/achievement
     BadgerequirementsModule,
     AchievementsModule,
     AchievementschecklistModule,
-    SkillModule
+    SkillModule,
+    BadgeModule
   ],
   controllers: [AppController],
   providers: [AppService],

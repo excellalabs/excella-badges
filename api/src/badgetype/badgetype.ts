@@ -1,5 +1,5 @@
 import { AfterInsert, AfterUpdate, AfterRemove, Entity, Column, OneToMany, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-// import { Category } from 'src/category/category';
+import { Badge } from 'src/badge/badge';
 
 @Entity()
 export class BadgeType {
@@ -9,8 +9,8 @@ export class BadgeType {
     @Column()
     name: string;
 
-    // @ManyToOne(() => Category, category => category.capability)
-    // category: Category;
+    @OneToMany(() => Badge, badge => badge.badgeType)
+    badge: Badge[];
 
     @AfterInsert()
     logEvent() {

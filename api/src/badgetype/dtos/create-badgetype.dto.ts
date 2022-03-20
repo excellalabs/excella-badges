@@ -4,6 +4,4 @@ import{ IsString  } from 'class-validator'
 export class CreateBadgeTypeDto {
     @IsString()
     name: string;
-
-    // category: CategoryDto
 }

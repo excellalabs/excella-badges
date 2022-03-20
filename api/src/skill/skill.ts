@@ -1,6 +1,7 @@
 import { AfterInsert, AfterUpdate, AfterRemove, Entity, Column, OneToOne, OneToMany, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Capability } from 'src/capability/capability';
 import { SkillLevel } from 'src/skilllevel/skilllevel';
+import { Badge } from 'src/badge/badge';
 
 @Entity()
 export class Skill {
@@ -15,6 +16,9 @@ export class Skill {
 
     @ManyToOne(() => SkillLevel,  skilllevel => skilllevel.skill)
     skilllevel: SkillLevel;
+
+    @OneToMany(() => Badge, badge => badge.skill)
+    badge: Badge[];
 
     @AfterInsert()
     logEvent() {
