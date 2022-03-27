@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CategoryComponent } from './category.component';
+import { SkilllevelComponent } from './skilllevel.component';
 
 // import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: CategoryComponent
+    component: SkilllevelComponent
   }
 ];
 
@@ -20,4 +20,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class CategoryRoutingModule {}
+export class SkilllevelRoutingModule {}

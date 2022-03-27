@@ -1,7 +1,7 @@
 import { AfterInsert, AfterUpdate, AfterRemove, Entity, Column, OneToOne, OneToMany, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Capability } from 'src/capability/capability';
-import { SkillLevel } from 'src/skilllevel/skilllevel';
-import { Badge } from 'src/badge/badge';
+import { Capability } from '../capability/capability';
+import { SkillLevel } from '../skilllevel/skilllevel';
+import { Badge } from '../badge/badge';
 
 @Entity()
 export class Skill {

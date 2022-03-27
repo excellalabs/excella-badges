@@ -1,5 +1,5 @@
 import { Expose } from "class-transformer";
-// import { CategoryDto } from 'src/category/dtos/category.dto';
+// import { CategoryDto } from '../category/dtos/category.dto';
 
 export class BadgeTypeDto {
     @Expose()

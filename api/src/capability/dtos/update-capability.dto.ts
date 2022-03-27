@@ -1,6 +1,6 @@
 import { Expose, Exclude } from 'class-transformer';
 import { IsOptional } from "class-validator";
-import { Skill } from 'src/skill/skill';
+import { Skill } from '../../skill/skill';
 
 export class UpdateCapabilityDto {
     @Expose()

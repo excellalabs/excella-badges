@@ -5,22 +5,42 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CapabilityModule } from './capability/capability.module';
 import { MainmenuComponent } from './mainmenu/mainmenu.component';
-import { CategoryModule } from './category/category.module';
+import { SkilllevelModule } from './skilllevel/skilllevel.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogComponentDialog } from './dialog/dialog.component';
+
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+
+import { MatTableModule } from  '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatCardModule } from  '@angular/material/card';
+import { MatInputModule } from  '@angular/material/input';
+import { MatButtonModule } from  '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainmenuComponent
+    MainmenuComponent,
+    DialogComponentDialog
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CapabilityModule,
-    CategoryModule,
-    BrowserAnimationsModule
+    SkilllevelModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatTableModule,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule
   ],
-  providers: [],
+  providers: [
+      MatDialog
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

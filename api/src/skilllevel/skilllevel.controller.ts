@@ -64,6 +64,7 @@ export class SkillLevelController {
      */
      @Delete('/:id')
      delete(@Param('id') id: string) {
+         console.log("deleting id = ",id)
          return this.skillLevelService.remove(parseInt(id));
      }
 }

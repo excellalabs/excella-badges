@@ -1,7 +1,7 @@
 import { Expose } from "class-transformer";
 import { IsOptional } from "class-validator";
-import { CapabilityDto } from 'src/capability/dtos/capability.dto'
-import { SkillLevelDto } from 'src/skilllevel/dtos/skilllevel.dto'
+import { CapabilityDto } from '../../capability/dtos/capability.dto'
+import { SkillLevelDto } from '../../skilllevel/dtos/skilllevel.dto'
 
 export class UpdateSkillDto {
     @Expose()

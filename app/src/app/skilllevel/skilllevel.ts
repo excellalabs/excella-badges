@@ -1,4 +1,4 @@
-export class Category {
+export class Skilllevel {
     id: number;
     name: string;
 
