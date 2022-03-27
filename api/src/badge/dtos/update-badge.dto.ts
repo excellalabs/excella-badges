@@ -1,7 +1,7 @@
 import { Expose } from "class-transformer";
 import{ IsNotEmpty } from 'class-validator'
-import { SkillDto } from 'src/skill/dtos/skill.dto';
-import { BadgeTypeDto } from 'src/badgetype/dtos/badgetype.dto';
+import { SkillDto } from '../../skill/dtos/skill.dto';
+import { BadgeTypeDto } from '../../badgetype/dtos/badgetype.dto';
 
 export class UpdateBadgeDto {
     @Expose()

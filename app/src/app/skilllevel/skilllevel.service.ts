@@ -14,6 +14,7 @@ export class SkilllevelService {
     return this.http.get<Skilllevel[]>( `${this.API_SERVER}/skilllevel` );
   }
 
+<<<<<<< HEAD
   public create(skilllevel: Skilllevel){
     return this.http.post<any>(`${this.API_SERVER}/skilllevel/`, skilllevel);
   }
@@ -24,5 +25,21 @@ export class SkilllevelService {
 
   public delete(id: number){
     return this.http.delete(`${this.API_SERVER}/skilllevel/${id}`);
+=======
+  public get(id: number){
+    return this.http.get<Skilllevel>( `${this.API_SERVER}/skilllevel/${id}` );
+  }
+
+  public create(skilllevel: Skilllevel){
+    return this.http.post<Skilllevel>( `${this.API_SERVER}/skilllevel`, skilllevel);
+  }
+
+  public update(skilllevel: Skilllevel){
+    return this.http.post<Skilllevel>( `${this.API_SERVER}/skilllevel/${skilllevel.id}`, skilllevel);
+  }
+
+  public delete(id: number){
+    return this.http.delete( `${this.API_SERVER}/skilllevel/${id}` );
+>>>>>>> 386955d702218105a49157e893c7c5f15a1d4013
   }
 }

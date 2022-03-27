@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 import { Serialize } from '../interceptors/serialize.interceptor';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Serialize(UserDto)
 @Controller('user')

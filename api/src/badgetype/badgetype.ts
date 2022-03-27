@@ -1,5 +1,5 @@
 import { AfterInsert, AfterUpdate, AfterRemove, Entity, Column, OneToMany, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Badge } from 'src/badge/badge';
+import { Badge } from '../badge/badge';
 
 @Entity()
 export class BadgeType {
