@@ -1,5 +1,5 @@
 import { AfterInsert, AfterUpdate, AfterRemove, Entity, Column, OneToMany, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Skill } from 'src/skill/skill';
+import { Skill } from '../skill/skill';
 
 @Entity()
 export class Capability {

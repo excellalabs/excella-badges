@@ -38,6 +38,7 @@ let SkillLevelController = class SkillLevelController {
         this.skillLevelService.update(parseInt(id), body);
     }
     delete(id) {
+        console.log("deleting id = ", id);
         return this.skillLevelService.remove(parseInt(id));
     }
 };

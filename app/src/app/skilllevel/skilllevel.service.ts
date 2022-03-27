@@ -14,15 +14,19 @@ export class SkilllevelService {
     return this.http.get<Skilllevel[]>( `${this.API_SERVER}/skilllevel` );
   }
 
-  public create(skilllevel: Skilllevel){
-    return this.http.post<any>(`${this.API_SERVER}/skilllevel/`, skilllevel);
+  public get(id: number){
+    return this.http.get<Skilllevel>( `${this.API_SERVER}/skilllevel/${id}` );
   }
 
-  public update(id: number, skilllevel: Skilllevel){
-    return this.http.put<any>(`${this.API_SERVER}/skilllevel/${id}`, skilllevel);
+  public create(skilllevel: Skilllevel){
+    return this.http.post<Skilllevel>( `${this.API_SERVER}/skilllevel`, skilllevel);
+  }
+
+  public update(skilllevel: Skilllevel){
+    return this.http.post<Skilllevel>( `${this.API_SERVER}/skilllevel/${skilllevel.id}`, skilllevel);
   }
 
   public delete(id: number){
-    return this.http.delete(`${this.API_SERVER}/skilllevel/${id}`);
+    return this.http.delete( `${this.API_SERVER}/skilllevel/${id}` );
   }
 }

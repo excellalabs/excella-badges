@@ -26,7 +26,9 @@ export class SkillLevelService {
     }
 
     async create(newSkillLevel: CreateSkillLevelDto) {
-        return this.repo.save(this.repo.create(newSkillLevel));
+        const skilllevel = this.repo.create(newSkillLevel)
+        console.log("creating new ",skilllevel)
+        return this.repo.save(skilllevel);
     }
     
     async update(id: number, attrs: Partial<UpdateSkillLevelDto>) {
@@ -41,9 +43,10 @@ export class SkillLevelService {
     }
 
     async remove(id: number){
+        console.log("locating id = ",id)
         const skillLevel = await this.findOne(id);
         if(!skillLevel){
-            console.error('Update: skill level not found')
+            console.error('Delete: skill level not found')
             return null
         }
         return this.repo.delete(id);

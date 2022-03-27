@@ -1,5 +1,5 @@
 import { Exclude, Expose } from "class-transformer";
-import { Skill } from 'src/skill/skill';
+import { Skill } from '../../skill/skill';
 
 export class CapabilityDto {
     @Expose()

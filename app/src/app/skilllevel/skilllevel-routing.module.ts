@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SkilllevelComponent } from './skilllevel.component';
 
+// import { AuthGuard } from '../auth/auth.guard';
+
 const routes: Routes = [
   {
     path: '',

@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
 import{ IsString  } from 'class-validator'
-import { Skill } from 'src/skill/skill';
+import { Skill } from '../../skill/skill';
 
 export class CreateCapabilityDto {
     @IsString()
