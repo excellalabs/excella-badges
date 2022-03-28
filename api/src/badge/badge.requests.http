@@ -1,26 +1,26 @@
-### Create new badge
-POST http://localhost:3000/badge
-Content-Type: application/json
+# ### Create new badge
+# POST http://localhost:3000/badge
+# Content-Type: application/json
 
-{
-    "name": "New Badge",
-    "skill": 1,
-    "badgeType": 1
-}
+# {
+#     "name": "New Badge",
+#     "skill": 1,
+#     "badgeType": 1
+# }
 
-### Get all badges
-GET http://localhost:3000/badge
+# ### Get all badges
+# GET http://localhost:3000/badge
 
-### Get a badge by id
-GET http://localhost:3000/badge/id/1
+# ### Get a badge by id
+# GET http://localhost:3000/badge/id/1
 
-### Delete a badge by id
-DELETE http://localhost:3000/badge/4
+# ### Delete a badge by id
+# DELETE http://localhost:3000/badge/4
 
-### Update a badge
-PATCH http://localhost:3000/badge/4
-Content-Type: application/json
+# ### Update a badge
+# PATCH http://localhost:3000/badge/4
+# Content-Type: application/json
 
-{
-    "name": "Expert"
-}
+# {
+#     "name": "Expert"
+# }
