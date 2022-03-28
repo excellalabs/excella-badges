@@ -1,83 +1,11 @@
 <div style="margin-left:30px">
     <h2><a style="text-decoration:none;color:black" routerLink="/"><<</a>&nbsp;&nbsp;Skill Level Menu</h2>
     <hr/><br/>
-<<<<<<< HEAD
-    <mat-card *ngIf="!isEditing">
-=======
     <mat-card>
->>>>>>> 386955d702218105a49157e893c7c5f15a1d4013
         <mat-card-header>
           <mat-card-title>Skill Level</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-<<<<<<< HEAD
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
-            <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef>ID </th>
-              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef>Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef> Actions </th>
-              <td mat-cell *matCellDef="let element"> 
-                  <button mat-raised-button (click)="edit(element.id)" color="secondary">Edit</button>
-                  <button mat-raised-button (click)="delete(element.id)" color="secondary">Delete</button>
-              </td>
-            </ng-container>
-      
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-      
-        </mat-card-content>
-      </mat-card>
-      <!-- You can find more details of how you create a Material table from the official docs.
-      
-      Next, let's add a form to create and update contacts just below the table:
-      -->
-      <!-- <mat-card *ngIf="isCreating">
-        <mat-card-header>
-          <mat-card-title>Create a Skill Level</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <form [formGroup]="form" (submit)="submit()">
-            <mat-form-field class="form-field" appearance="outline">
-              <mat-label> E-mail
-              </mat-label>
-              <input matInput formControlName="email" required>
-              <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
-                <span *ngIf="loginForm.controls.email.errors.required">This field is mandatory.</span>
-                <span *ngIf="loginForm.controls.email.errors.pattern">This field is invalid.</span>
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-field" appearance="outline">
-              <mat-label> Password
-              </mat-label>
-              <input matInput formControlName="password" type="password">
-              <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
-                <span *ngIf="loginForm.controls.password.errors.required">This field is mandatory.</span>
-              </mat-error>
-            </mat-form-field>
-            <button mat-raised-button color="primary" type="submit">Log In</button>
-          </form>
-        </mat-card-content>
-        <mat-card-actions>
-            <button  mat-raised-button *ngIf="!skilllevel.id" (click)="update(f)" color="primary">Save</button>
-            <button  mat-raised-button *ngIf="skilllevel.id" (click)="edit(f)" color="primary">Update</button>
-            <button  mat-raised-button (click)="create()" color="primary">Create New</button>
-        </mat-card-actions>
-      </mat-card> -->
-
-                <!-- <form #f ="ngForm" class="mat-elevation-z8" style="width: 100%; padding: 5px;">
-            <mat-form-field>
-              <input matInput placeholder="Name" name="name" [(ngModel)] = "skilllevel.name" required>
-            </mat-form-field>        
-          </form> -->
-=======
           <form [formGroup]="skillform" autocomplete="off">
             <ng-container formArrayName="rows">
               <button mat-icon-button (click)="create()" class="material-icons app-toolbar-menu add-button">
@@ -138,5 +66,4 @@
           </form> 
         </mat-card-content>
       </mat-card>
->>>>>>> 386955d702218105a49157e893c7c5f15a1d4013
 </div>
