@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CapabilityModule } from './capability/capability.module';
 import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { SkilllevelModule } from './skilllevel/skilllevel.module';
+import { BadgeTypeModule } from './badgetype/badgetype.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogComponentDialog } from './dialog/dialog.component';
 
@@ -29,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
     AppRoutingModule,
     CapabilityModule,
     SkilllevelModule,
+    BadgeTypeModule,
     BrowserAnimationsModule,
     MatDialogModule,
     MatTableModule,

@@ -15,8 +15,8 @@ const routes: Routes = [
     loadChildren: () => import('./skilllevel/skilllevel.module').then(m => m.SkilllevelModule),
   },
   {
-    path: 'skilllevel',
-    loadChildren: () => import('./skilllevel/skilllevel.module').then(m => m.SkilllevelModule),
+    path: 'badgetype',
+    loadChildren: () => import('./badgetype/badgetype.module').then(m => m.BadgeTypeModule),
   },
 ];
 
