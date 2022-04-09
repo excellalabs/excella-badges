@@ -23,7 +23,7 @@ export class SkilllevelService {
   }
 
   public update(skilllevel: Skilllevel){
-    return this.http.post<Skilllevel>( `${this.API_SERVER}/skilllevel/${skilllevel.id}`, skilllevel);
+    return this.http.patch<Skilllevel>( `${this.API_SERVER}/skilllevel/${skilllevel.id}`, skilllevel);
   }
 
   public delete(id: number){

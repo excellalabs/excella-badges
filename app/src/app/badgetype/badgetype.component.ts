@@ -65,6 +65,22 @@ export class BadgeTypeComponent implements OnInit {
     }
   }
 
+  getActive(index: number): string {
+    if(index === this.selectedIndex)
+      return "active"
+    else
+      return "inactive"
+  }
+
+  checkActivate(index: number): void {
+    const rows:FormArray = this.form.get('rows') as FormArray
+    const isNew = rows.at(index)?.get('isNew')?.value
+    const isEditing = rows.at(index)?.get('isEditing')?.value
+    if(!isNew && !isEditing && this.selectedIndex==-1){
+      this.edit(index)
+    }
+  }
+
   edit(index: number){
     const rows:FormArray = this.form.get('rows') as FormArray
     rows.at(index).get('isEditing')?.patchValue(true)

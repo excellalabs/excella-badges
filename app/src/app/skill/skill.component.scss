@@ -1,0 +1,103 @@
+mat-card {
+    background-color: #919294;
+    width:90%
+}
+.mat-column-id {
+    flex: none;
+    width: 10%;
+}
+.mat-column-name {
+    flex: none;
+    width: 70%;
+}
+.mat-column-actions {
+    flex: none;
+    width: 20%;
+}
+::ng-deep .mat-table {
+  background-color: #ffffff !important;
+  color: black !important
+}
+.mat-card {
+  background-color: #1976d2;
+}
+.test{
+  background-color:antiquewhite;
+}
+.test2{
+  background-color:white;
+}
+table {
+    width: 100%;
+    border:1px solid black;
+  }
+  mat-form-field {
+    padding-left:30px;
+  }
+  .mat-header-cell {
+    background-color:#0e3964 !important;
+    padding-left:30px;
+    font-size:14pt;
+    
+  }
+  td {
+    border:1px solid gray;
+    padding:3px;
+    margin:3px;
+    padding-left:5px;
+  }
+  .mat-paginator-range-label {
+      display: none;
+  }
+  
+  .mat-cell {
+    background-color: #eeeeee;
+  }
+  ::ng-deep .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+    color:black !important;
+  }
+  
+  ::ng-deep .mat-select {
+    color: black !important;
+  }
+  ::ng-deep .mat-select-panel{
+    background-color: white;
+    font-size: 10px;
+    color: black;
+}
+
+::ng-deep .mat-select-content{
+  color:black !important;
+}
+  .mat-option {
+    color:black;
+  }
+
+  ::ng-deep .mat-select-value {
+    color:black !important;
+  }
+  .mat-icon-button:disabled {
+    color: gray;
+  }
+
+  .add-button {
+    background-color:white;
+    color: #1976d2;
+  }
+  /* Border */
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: rgb(255, 255, 255);
+    /* background-color: white; */
+  }
+  /* Font color */
+  input.mat-input-element {
+    color: rgb(0, 0, 0);
+  }
+  .active {
+    background-color:white;
+  }
+  .inactive {
+    background-color: #eeeeee;
+  }

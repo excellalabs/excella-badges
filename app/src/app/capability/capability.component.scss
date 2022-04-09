@@ -1,0 +1,73 @@
+mat-card {
+    background-color: #919294;
+    width:90%
+}
+.mat-column-id {
+    flex: none;
+    width: 10%;
+}
+.mat-column-name {
+    flex: none;
+    width: 70%;
+}
+.mat-column-actions {
+    flex: none;
+    width: 20%;
+}
+.mat-table {
+  background-color: #ffffff !important;
+}
+.mat-card {
+  background-color: #1976d2;
+}
+.test{
+  background-color:antiquewhite;
+}
+.test2{
+  background-color:white;
+}
+table {
+    width: 100%;
+    border:1px solid black
+  }
+  mat-form-field {
+    padding-left:30px;
+  }
+  td {
+    border:1px solid gray;
+    padding:3px;
+    margin:3px;
+    padding-left:5px;
+  }
+  .mat-paginator-range-label {
+      display: none;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .mat-icon-button:disabled {
+    color: gray;
+  }
+
+  .add-button {
+    background-color:white;
+    color: #1976d2;
+  }
+  /* Border */
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: rgb(255, 255, 255);
+    /* background-color: white; */
+  }
+  /* Font color */
+  input.mat-input-element {
+    color: rgb(0, 0, 0);
+  }
+  .active {
+    background-color:cornsilk;
+  }
+  .inactive {
+    background-color: #ffffff;
+  }

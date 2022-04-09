@@ -16,7 +16,7 @@
                 <ng-container matColumnDef="name">
                   <th mat-header-cell *matHeaderCellDef> Name </th>
                   <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-                    <mat-form-field style="width: 250px;">
+                    <mat-form-field (click)="checkActivate(i)" style="width: 250px" [class]="getActive(i)">
                       <input matInput type="text" formControlName="name" 
                       [readonly]="selectedIndex >= 0 && selectedIndex !== i">
                     </mat-form-field>

@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CapabilityComponent } from './capability.component';
 
-// import { AuthGuard } from '../auth/auth.guard';
-
 const routes: Routes = [
   {
     path: '',
