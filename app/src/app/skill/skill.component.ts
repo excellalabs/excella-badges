@@ -1,16 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Skill, SkillDto } from './skill';
 import { SkillService } from './skill.service';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { getMatFormFieldMissingControlError } from '@angular/material/form-field';
 import { DialogComponentDialog } from '../dialog/dialog.component';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Capability } from '../capability/capability';
 import { Skilllevel } from '../skilllevel/skilllevel';
 import { CapabilityService } from '../capability/capability.service';
 import { SkilllevelService } from '../skilllevel/skilllevel.service';
-import { NgMaterialModule } from '../ng-material/ng-material.module';
 
 const emptyGroup: FormGroup = new FormGroup({
   id: new FormControl(-1),
@@ -30,17 +28,17 @@ const emptyGroup: FormGroup = new FormGroup({
 export class SkillComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['name', 'capability', 'action'];
+  displayedColumns: string[] = ['name', 'capability', 'skilllevel', 'action'];
   form: FormGroup = new FormGroup({})
-  selectedIndex: number = -1
+
+  //collections
   records: Skill[] = []
   capabilities: Capability[] = []
   skilllevels: Skilllevel[] = []
-  selectedElement: FormGroup = emptyGroup
-  selectedEntry:Skill = {id: -1, name: ''} as Skill
 
-  updatedCapability: Capability = new Capability()
-  updatedSkillevel: Skilllevel = new Skilllevel()
+  //provides a quick way to check mode without inspecting records
+  isEditing: boolean = false
+  isCreating: boolean = false
 
   constructor(
     private service: SkillService,
@@ -57,9 +55,8 @@ export class SkillComponent implements OnInit {
   }
 
   private initialize(){
-    this.selectedElement = emptyGroup
-    this.selectedEntry = {id: -1, name: ''} as Skill
-    this.updatedCapability = new Capability()
+    this.isCreating = false
+    this.isEditing = false
   }
 
   /**
@@ -94,7 +91,7 @@ export class SkillComponent implements OnInit {
               id: new FormControl(val.id),
               name: new FormControl(val.name),
               capability: new FormControl(val.capability),
-              // skilllevel:new FormControl(val.skilllevel),
+              skilllevel:new FormControl(val.skilllevel),
               action: new FormControl('existingRecord'),
               isEditing: new FormControl(false),
               isNew: new FormControl(false)
@@ -106,57 +103,16 @@ export class SkillComponent implements OnInit {
   }
 
   edit(element: FormGroup){
-    this.storeEntry(element)
-    this.selectedElement = element
-    this.selectedElement.get('isEditing')?.patchValue(true)
-    // this.selectedElement.get('name')?.enable()
-  }
-
-  /**
-   * Saves the values of the record in order to revert if cancelled
-   * @param element - Current record being edited
-   */
-  private storeEntry(element: FormGroup){
-    this.selectedEntry.id = element.get('id')?.value
-    this.selectedEntry.name = element.get('name')?.value
-    this.selectedEntry.capability = element.get('capability')?.value
-    // this.selectedEntry.skilllevel = element.get('skilllevel')?.value
-  }
-
-  /**
-   * Used to restore the values from a cancelled edit
-   */
-  private restoreEntry(){
-    this.selectedElement.get('name')?.setValue(this.selectedEntry.name)
-    this.selectedElement.get('capability')?.setValue(this.selectedEntry.capability)
-    // this.selectedElement.get('skilllevel')?.setValue(this.selectedEntry.skilllevel)
-  }
-
-  isNew(): boolean {
-    return this.selectedElement.get('isNew')?.value
-  }
-
-  isEditing(): boolean {
-    return this.selectedElement.get('isEditing')?.value
+    this.isEditing = true
+    element.get('isEditing')?.patchValue(true)
   }
 
   isCurrent(element: FormGroup): boolean {
-    return this.selectedElement.get('id') ? this.selectedElement.get('id')?.value === element.get('id')?.value : false
-  }
-
-  getCurrentCapability(element: FormGroup): number {
-    return element.get('capability') ? element.get('capability')?.value.id : -1
+    return element.get('isEditing')?.value || element.get('isNew')?.value
   }
 
   cancel(){
-    if(this.isNew()){
-      this.selectedElement.get('isNew')?.patchValue(false)
-      this.buildForm()
-    }
-    if(this.isEditing()){
-      this.selectedElement.get('isEditing')?.patchValue(false)
-      this.restoreEntry()
-    }
+    this.buildForm()
     this.initialize()
   }
 
@@ -165,23 +121,23 @@ export class SkillComponent implements OnInit {
    * @param element - record to be deleted
    */
   delete(element: FormGroup): void {
-    this.selectedElement = element
-    this.openDialog()
+    this.openDialog(element)
   }
 
   /**
    * Opens a dialog asking if user is sure they wish to delete
    */
-  openDialog(): void {
+  openDialog(element: FormGroup): void {
     const dialogRef = this.dialog.open(DialogComponentDialog, {
       width: '500px',
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        const id = this.selectedElement.get('id')?.value
-        this.selectedElement.get('isEditing')?.patchValue(false)
+        const id = element.get('id')?.value
+        element.get('isEditing')?.patchValue(false)
         this.service.delete(id).subscribe(result => {
           this.buildForm()
+          this.initialize()
         })
       }
     });
@@ -191,22 +147,12 @@ export class SkillComponent implements OnInit {
    * Adds a new entry in the group
    */
   create(){
+    this.isCreating = true
     const rows:FormArray = this.form.get('rows') as FormArray
-    // const newSkill = {
-    //   id: new FormControl(0),
-    //   name: new FormControl(),
-    //   capability: new FormControl(),
-    //   skilllevel: new FormControl(),
-    //   action: new FormControl('existingRecord'),
-    //   isEditing: new FormControl(false),
-    //   isNew: new FormControl(true)
-    // }
-    // this.selectedElement = new FormGroup(newSkill)
-
     let newGroup = emptyGroup
     newGroup.get('id')?.setValue(0)
-    this.selectedElement = newGroup
-    rows.push(this.selectedElement)
+    newGroup.get('isNew')?.setValue(true)
+    rows.push(newGroup)
     this.dataSource = new MatTableDataSource((rows).controls);
   }
 
@@ -214,26 +160,13 @@ export class SkillComponent implements OnInit {
    * Called after create or edit and changes are made
    * @param element - the record being updated
    */
-  update(element: FormGroup, index: number){
-    element.get('isEditing')?.patchValue(false)
-    element.get('isNew')?.patchValue(false)
-    element.get('name')?.disable()
-    // element.get('capability')?.setValue(this.updatedCapability)
-    console.log("element = ",element)
-    // console.log("selectedElement = ",this.selectedElement)
-
-    
+  update(element: FormGroup){
     const record = this.buildDTO(element)
-    
+    if(this.isValid(record)){
+      element.get('isEditing')?.patchValue(false)
+      element.get('isNew')?.patchValue(false)
     if(record.id){
-      console.log("updating with entry = ",record)
       this.service.update(record).subscribe(result => {
-        // const rows:FormArray = this.form.get('rows') as FormArray
-        // element = this.selectedElement
-        // console.log(element)
-        // this.buildForm()
-        //simply get the values from selectedElement and apply to this element
-        // console.log(element)
         this.initialize()
       })
     } else {
@@ -243,25 +176,17 @@ export class SkillComponent implements OnInit {
         this.initialize()
       })
     }
+    }else{
+      alert("Error found. Please check entry")
+    }
   }
 
-  /**
-   * Called in markup to determine if record is the one being edited
-   * @param element - record in question
-   * @returns boolean
-   */
-  isEditingRecordUI(element: FormGroup): boolean {
-    return this.isEditing() && (this.isCurrent(element))
-  }
-
-  /**
-   * Called in markup to determine if record is disabled from editing
-   * @param element - record in question
-   * @returns boolean
-   */
-  isDisabledUI(element: FormGroup): boolean {
-    //record is disabled if isEditing or isNew and !this.isCurrent
-    return (this.isEditing() || this.isNew()) && !this.isCurrent(element)
+  isValid(skill: SkillDto){
+    if(skill.name === '')
+      return false
+    if(this.records.find(record => (record.name?.toLocaleLowerCase() === skill.name.toLocaleLowerCase() && record.id !== skill.id)) !== undefined)
+      return false 
+    return true  
   }
 
   /**
@@ -273,10 +198,31 @@ export class SkillComponent implements OnInit {
     return new SkillDto(
       element.get('id')?.value as number,
       element.get('name')?.value as string,
-      element.get('capability')?.value.id as number
-      // element.get('skilllevel')?.value.id as number
+      element.get('capability')?.value.id as number,
+      element.get('skilllevel')?.value.id as number
     )
   }
+
+  //Called from markup
+  //---------------------------------------
+    /**
+   * Called in markup to determine if record is the one being edited
+   * @param element - record in question
+   * @returns boolean
+   */
+     isEditingRecordUI(element: FormGroup): boolean {
+      return this.isEditing && (this.isCurrent(element))
+    }
+  
+    /**
+     * Called in markup to determine if record is disabled from editing
+     * @param element - record in question
+     * @returns boolean
+     */
+    isDisabledUI(element: FormGroup): boolean {
+      //record is disabled if isEditing or isNew and !this.isCurrent
+      return (this.isEditing || this.isCreating) && !this.isCurrent(element)
+    }
 
   /**
    * Gets the name of the CSS class
@@ -286,40 +232,5 @@ export class SkillComponent implements OnInit {
   getClassUI(element: FormGroup): string {
     return (this.isCurrent(element)) ? "active" : "inactive"
   }
-
-  /**
-   * Activates record for editing for not already editing a record
-   * @param element - the element in question
-   */
-  checkActivateUI(element: FormGroup): void {
-    if(!this.isEditing()){
-      this.edit(element)
-    }
-  }
-
-  /**
-   * Gets the name of the capability for this record
-   * @param element - element in question
-   * @returns the name of the current capability
-   */
-  getCapabilityUI(element: FormGroup): string{
-    return element.get('capability')?.value.name
-  }
-
-  getSelectedCapability(element: FormGroup){
-    return element.get('capability')?.value.id
-  }
-
-  getCapability(element: FormGroup): Capability {
-    return element.get('capability')?.value
-  }
-
-  // getSkilllevelUI(element: FormGroup): string{
-  //   return element.get('skilllevel')?.value.name
-  // }
-
-  // getSelectedSkilllevel(element: FormGroup){
-  //   return element.get('skilllevel')?.value.id
-  // }
 
 }

@@ -16,9 +16,9 @@
                 <ng-container matColumnDef="name">
                   <th mat-header-cell *matHeaderCellDef> Name </th>
                   <td mat-cell *matCellDef="let element" [formGroup]="element">
-                    <mat-form-field (click)="checkActivateUI(element)" style="width: 250px" [class]="getClassUI(element)">
+                    <mat-form-field style="width: 250px" [class]="getClassUI(element)">
                       <input matInput type="text" formControlName="name" 
-                      [readonly]="selectedElement !== element">
+                      [readonly]="!element.get('isEditing')?.value && !element.get('isNew')?.value">
                     </mat-form-field>
                   </td>
                 </ng-container>
@@ -26,51 +26,53 @@
                 <ng-container matColumnDef="capability">
                   <th mat-header-cell *matHeaderCellDef> Capability </th>
                   <td mat-cell *matCellDef="let element; let i = index" style="color:black" [formGroup]="element">
-                    <input matInput *ngIf="!isEditingRecordUI(element)" [value]="element.get('capability')?.value.name"/>
-                    <mat-form-field *ngIf="isEditingRecordUI(element)" style="width: 250px; color:black !important" [class]="getClassUI(element)">
+                    <input matInput readonly *ngIf="!element.get('isEditing')?.value && !element.get('isNew')?.value" [value]="element.get('capability')?.value.name"/>
+                    <mat-form-field style="width: 80%" *ngIf="element.get('isEditing')?.value || element.get('isNew')?.value" [class]="getClassUI(element)">
+                      <mat-label *ngIf="!isCreating">{{ element.get('capability')?.value.name }}</mat-label>
                       <mat-select [formControl]="element.get('capability')" [value]="element.get('capability')?.value">
-                        <mat-option style="color:black !important" *ngFor="let cap of capabilities" [value]="cap">{{ cap.name }}</mat-option>
+                        <mat-option selected *ngFor="let cap of capabilities" [value]="cap">{{ cap.name }}</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </td>
                 </ng-container>
-<!-- 
+
                 <ng-container matColumnDef="skilllevel">
                   <th mat-header-cell *matHeaderCellDef> Skill Level </th>
                   <td mat-cell *matCellDef="let element; let i = index" style="color:black" [formGroup]="element">
-                    <input matInput *ngIf="!isEditingRecordUI(element)" [value]="element.get('skilllevel')?.value.name"/>
-                    <mat-form-field *ngIf="isEditingRecordUI(element)" style="width: 250px; color:black !important" [class]="getClassUI(element)">
-                      <mat-select [(value)]="selectedElement.get('skilllevel')?.value.id">
-                        <mat-option style="color:black !important" *ngFor="let level of skilllevels" [value]="level.id">{{ cap.name }}</mat-option>
+                    <input matInput readonly *ngIf="!element.get('isEditing')?.value && !element.get('isNew')?.value" [value]="element.get('skilllevel')?.value.name"/>
+                    <mat-form-field style="width: 80%" *ngIf="element.get('isEditing')?.value || element.get('isNew')?.value" [class]="getClassUI(element)">
+                      <mat-label *ngIf="!isCreating">{{ element.get('skilllevel')?.value.name }}</mat-label>
+                      <mat-select [formControl]="element.get('skilllevel')" [value]="element.get('skilllevel')?.value">
+                        <mat-option style="color:black !important" *ngFor="let level of skilllevels" [value]="level">{{ level.name }}</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </td>
-                </ng-container> -->
+                </ng-container>
 
                 <ng-container matColumnDef="action">
                   <th mat-header-cell *matHeaderCellDef> Action </th>
                   <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
                     <button mat-icon-button class="material-icons app-toolbar-menu save-button"
-                                            matTooltip="Save Changes" (click)="update(element, i)"
-                                            *ngIf="isEditingRecordUI(element)" color="primary">
+                                            matTooltip="Save Changes" (click)="update(element)"
+                                            *ngIf="element.get('isEditing')?.value || element.get('isNew')?.value" color="primary">
                                             <mat-icon>check_circle</mat-icon>
                                         </button>
         
                     <button mat-icon-button class="material-icons app-toolbar-menu cancel-button"
                                             matTooltip="Cancel Changes" color="warn"
                                             (click)="cancel()"
-                                            *ngIf="isEditingRecordUI(element)">
+                                            *ngIf="element.get('isEditing')?.value || element.get('isNew')?.value">
                                             <mat-icon>cancel</mat-icon>
                                         </button>
         
                     <button mat-icon-button [disabled]="isDisabledUI(element)" class="material-icons app-toolbar-menu save-button"
-                                            *ngIf="!isEditingRecordUI(element)"
+                                            *ngIf="!element.get('isEditing')?.value && !element.get('isNew')?.value"
                                             matTooltip="Edit" color="primary" (click)="edit(element)">
                                             <mat-icon>edit</mat-icon>
                                         </button>
         
                     <button mat-icon-button [disabled]="isDisabledUI(element)" class="material-icons app-toolbar-menu delete-button"
-                                            *ngIf="!isEditingRecordUI(element)" (click)="delete(element)"
+                                            *ngIf="!element.get('isEditing')?.value && !element.get('isNew')?.value" (click)="delete(element)"
                                             matTooltip="Delete" color="warn">
                                             <mat-icon>delete</mat-icon>
                                         </button>
