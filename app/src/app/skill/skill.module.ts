@@ -8,9 +8,11 @@ import { MatCardModule } from  '@angular/material/card';
 import { MatInputModule } from  '@angular/material/input';
 import { MatButtonModule } from  '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+// import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
+    // MatSortModule,
+    MatPaginatorModule,
     SkillRoutingModule,
     HttpClientModule,
     FormsModule,

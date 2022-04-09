@@ -6,6 +6,25 @@
           <mat-card-title>Skill</mat-card-title>
         </mat-card-header>
         <mat-card-content>
+          <div class="example-header">
+            <mat-form-field style="width:300px">
+              <input matInput [disabled]="isEditing || isCreating" [(ngModel)]="filterCriteria" placeholder="Filter by name">
+            </mat-form-field>
+            <mat-form-field style="width:300px">
+              <mat-label>Filter by Capability</mat-label>
+              <mat-select [(ngModel)]="filterCapability">
+                <mat-option selected *ngFor="let cap of capabilities" [value]="cap">{{ cap.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field style="width:300px">
+              <mat-label>Filter by Skill Level</mat-label>
+              <mat-select [(ngModel)]="filterSkilllevel">
+                <mat-option selected *ngFor="let level of skilllevels" [value]="level">{{ level.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>&nbsp;&nbsp;
+            <button (click)="applyFilter()">Apply</button>
+            <button (click)="resetFilters()">Reset</button>
+          </div>
           <form [formGroup]="form" autocomplete="off">
             <ng-container formArrayName="rows">
               <button mat-icon-button (click)="create()" class="material-icons app-toolbar-menu add-button">
@@ -14,7 +33,7 @@
               <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef> Name </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
                   <td mat-cell *matCellDef="let element" [formGroup]="element">
                     <mat-form-field style="width: 250px" [class]="getClassUI(element)">
                       <input matInput type="text" formControlName="name" 
@@ -89,7 +108,12 @@
 
               </table>
             </ng-container>
+
+          <mat-paginator #paginator [pageSize]="8" [pageSizeOptions]="[2, 5, 10, 25, 100]">
+          </mat-paginator>
           </form> 
+
+
         </mat-card-content>
       </mat-card>
 </div>

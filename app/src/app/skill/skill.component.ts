@@ -9,6 +9,8 @@ import { Capability } from '../capability/capability';
 import { Skilllevel } from '../skilllevel/skilllevel';
 import { CapabilityService } from '../capability/capability.service';
 import { SkilllevelService } from '../skilllevel/skilllevel.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { filter } from 'rxjs';
 
 const emptyGroup: FormGroup = new FormGroup({
   id: new FormControl(-1),
@@ -27,18 +29,29 @@ const emptyGroup: FormGroup = new FormGroup({
 })
 export class SkillComponent implements OnInit {
 
+  @ViewChild('paginator') paginator!: MatPaginator;
+  // MatPaginator Inputs
+  // length = 100;
+  pageSize = 8;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['name', 'capability', 'skilllevel', 'action'];
   form: FormGroup = new FormGroup({})
 
   //collections
   records: Skill[] = []
+  filteredRecords: Skill[] = []
   capabilities: Capability[] = []
   skilllevels: Skilllevel[] = []
 
   //provides a quick way to check mode without inspecting records
   isEditing: boolean = false
   isCreating: boolean = false
+
+  filterCriteria: string = ""
+  filterCapability: Capability = new Capability()
+  filterSkilllevel: Skilllevel = new Skilllevel()
 
   constructor(
     private service: SkillService,
@@ -51,14 +64,49 @@ export class SkillComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRelatedData()
-    this.buildForm()
+    this.loadData()
+    
   }
 
+  loadData(){
+    this.service.getAll().subscribe(records => {
+      this.records = records
+      this.filteredRecords = records
+      this.buildForm()
+    })
+  }
   private initialize(){
     this.isCreating = false
     this.isEditing = false
   }
 
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+    }
+  }
+  
+  applyFilter(){
+    this.filteredRecords = this.records
+    let filterText = ''
+    if(this.filterCriteria !== ''){
+      filterText = this.filterCriteria
+      this.filteredRecords = this.records.filter(record => record.name?.toLowerCase().includes(filterText.toLowerCase()))
+    }else if(this.filterCapability.id){
+      this.filteredRecords = this.records.filter(record => record.capability?.id === this.filterCapability.id)
+    }else if(this.filterSkilllevel.id){
+      this.filteredRecords = this.records.filter(record => record.skilllevel?.id === this.filterSkilllevel.id)
+    }
+    this.buildForm()
+  }
+
+  resetFilters(){
+    this.filterCriteria = ''
+    this.filterCapability = new Capability()
+    this.filterSkilllevel = new Skilllevel()
+    this.filteredRecords = this.records
+    this.buildForm()
+  }
   /**
    * Calls the service to get the list of all capabilities and all skills
    */
@@ -71,6 +119,15 @@ export class SkillComponent implements OnInit {
     })
   }
 
+  // applyFilter(event: any) {
+    // let filterValue = event.target?.value as string
+    // filterValue = filterValue.trim(); // Remove whitespace
+    // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    // this.filteredRecords = this.records.filter(record => record.name?.toLowerCase().includes(filterValue))
+    // this.buildForm()
+    // this.dataSource.filter = filterValue;
+  // }
+
   /**
    * Builds the form group and form controls
    */
@@ -81,12 +138,10 @@ export class SkillComponent implements OnInit {
       rows: this._formBuilder.array([])
     });
 
-    this.service.getAll().subscribe(records => {
-      this.records = records
-      console.log(this.records)
+    // records.forEach(record => {
       this.form = this.fb.group({
         rows: this.fb.array(
-          records.map(
+          this.filteredRecords.map(
             val => this.fb.group({
               id: new FormControl(val.id),
               name: new FormControl(val.name),
@@ -99,8 +154,10 @@ export class SkillComponent implements OnInit {
         )) //end of fb array
       }); // end of form group cretation
       this.dataSource = new MatTableDataSource((this.form.get('rows') as FormArray).controls);
-    })
+      this.dataSource.paginator = this.paginator;
+    // })
   }
+
 
   edit(element: FormGroup){
     this.isEditing = true
@@ -112,7 +169,7 @@ export class SkillComponent implements OnInit {
   }
 
   cancel(){
-    this.buildForm()
+    this.resetFilters()
     this.initialize()
   }
 
@@ -136,7 +193,11 @@ export class SkillComponent implements OnInit {
         const id = element.get('id')?.value
         element.get('isEditing')?.patchValue(false)
         this.service.delete(id).subscribe(result => {
-          this.buildForm()
+          this.filterCriteria = ''
+          this.filterCapability = new Capability()
+          this.filterSkilllevel = new Skilllevel()
+          this.filteredRecords = this.records
+          this.loadData()
           this.initialize()
         })
       }
@@ -147,13 +208,25 @@ export class SkillComponent implements OnInit {
    * Adds a new entry in the group
    */
   create(){
+    this.resetFilters()
     this.isCreating = true
     const rows:FormArray = this.form.get('rows') as FormArray
     let newGroup = emptyGroup
     newGroup.get('id')?.setValue(0)
     newGroup.get('isNew')?.setValue(true)
     rows.push(newGroup)
+
+    var pageNumber = Math.ceil(this.records.length/this.paginator.pageSize-1)
+    this.paginator.pageIndex = pageNumber;
+
+    this.paginator.page.next({      
+        pageIndex: pageNumber,
+        pageSize: this.paginator.pageSize,
+        length: this.paginator.length
+    });
+
     this.dataSource = new MatTableDataSource((rows).controls);
+    this.dataSource.paginator = this.paginator;
   }
 
   /**
@@ -161,19 +234,23 @@ export class SkillComponent implements OnInit {
    * @param element - the record being updated
    */
   update(element: FormGroup){
+
     const record = this.buildDTO(element)
     if(this.isValid(record)){
       element.get('isEditing')?.patchValue(false)
       element.get('isNew')?.patchValue(false)
     if(record.id){
       this.service.update(record).subscribe(result => {
+        this.loadData()
         this.initialize()
+        this.filterCriteria = ""
       })
     } else {
       this.service.create(record).subscribe(record => {
         element.get('id')?.patchValue(record.id)
-        this.buildForm()
+        this.loadData()
         this.initialize()
+        this.filterCriteria = ""
       })
     }
     }else{
