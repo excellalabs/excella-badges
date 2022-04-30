@@ -7,7 +7,10 @@ import { CapabilityModule } from './capability/capability.module';
 import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { SkilllevelModule } from './skilllevel/skilllevel.module';
 import { SkillModule } from './skill/skill.module';
+import { BadgeRequirementModule } from './badgerequirement/badgerequirement.module';
 import { BadgeTypeModule } from './badgetype/badgetype.module';
+import { AchievementModule } from './achievement/achievement.module';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogComponentDialog } from './dialog/dialog.component';
 
@@ -34,6 +37,8 @@ import { MatIconModule } from '@angular/material/icon';
     SkilllevelModule,
     SkillModule,
     BadgeTypeModule,
+    BadgeRequirementModule,
+    AchievementModule,
 
     BrowserAnimationsModule,
     MatDialogModule,

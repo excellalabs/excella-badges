@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Badge } from './badge';
+import { Badge, BadgeDto } from './badge';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +18,14 @@ export class BadgeService {
     return this.http.get<Badge>( `${this.API_SERVER}/badge/${id}` );
   }
 
-  public create(badge: Badge){
+  public create(badge: BadgeDto){
+    console.log("sending badge = ",badge)
     return this.http.post<Badge>( `${this.API_SERVER}/badge`, badge);
   }
 
-  public update(badge: Badge){
-    return this.http.post<Badge>( `${this.API_SERVER}/badge/${badge.id}`, badge);
+  public update(badge: BadgeDto){
+    console.log("updating with record = ",badge)
+    return this.http.patch<Badge>( `${this.API_SERVER}/badge/${badge.id}`, badge);
   }
 
   public delete(id: number){

@@ -1,0 +1,109 @@
+<div style="margin-left:30px">
+  <h2><a style="text-decoration:none;color:black" routerLink="/"><<</a>&nbsp;&nbsp;User Menu</h2>
+  <hr/><br/>
+  <mat-card>
+      <mat-card-header>
+        <mat-card-title>User</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="example-header">
+          <mat-form-field style="width:300px">
+            <input matInput [disabled]="isEditing || isCreating" (keyup)="applyFilter()" [(ngModel)]="filterCriteria" placeholder="Filter">
+          </mat-form-field>&nbsp;&nbsp;
+          <button style="float:right" mat-icon-button (click)="create()" class="material-icons app-toolbar-menu add-button">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <form [formGroup]="form" autocomplete="off">
+          <ng-container formArrayName="rows">
+            <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+              <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                <td mat-cell *matCellDef="let element" [formGroup]="element">
+                  <mat-form-field style="width: 250px" [class]="getClassUI(element)">
+                    <input matInput type="text" formControlName="firstName" 
+                    [readonly]="!element.get('isEditing')?.value && !element.get('isNew')?.value">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+                <td mat-cell *matCellDef="let element" [formGroup]="element">
+                  <mat-form-field style="width: 250px" [class]="getClassUI(element)">
+                    <input matInput type="text" formControlName="lastName" 
+                    [readonly]="!element.get('isEditing')?.value && !element.get('isNew')?.value">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                <td mat-cell *matCellDef="let element" [formGroup]="element">
+                  <mat-form-field style="width: 250px" [class]="getClassUI(element)">
+                    <input matInput type="text" formControlName="email" 
+                    [readonly]="!element.get('isEditing')?.value && !element.get('isNew')?.value">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+                <td mat-cell *matCellDef="let element" [formGroup]="element">
+                  <mat-form-field style="width: 250px" [class]="getClassUI(element)">
+                    <input matInput type="text" formControlName="role" 
+                    [readonly]="!element.get('isEditing')?.value && !element.get('isNew')?.value">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+                  <button mat-icon-button class="material-icons app-toolbar-menu save-button"
+                                          matTooltip="Save Changes" (click)="update(element)"
+                                          *ngIf="element.get('isEditing')?.value || element.get('isNew')?.value" color="primary">
+                                          <mat-icon>check_circle</mat-icon>
+                                      </button>
+      
+                  <button mat-icon-button class="material-icons app-toolbar-menu cancel-button"
+                                          matTooltip="Cancel Changes" color="warn"
+                                          (click)="cancel()"
+                                          *ngIf="element.get('isEditing')?.value || element.get('isNew')?.value">
+                                          <mat-icon>cancel</mat-icon>
+                                      </button>
+      
+                  <button mat-icon-button [disabled]="isDisabledUI(element)" class="material-icons app-toolbar-menu save-button"
+                                          *ngIf="!element.get('isEditing')?.value && !element.get('isNew')?.value"
+                                          matTooltip="Edit" color="primary" (click)="edit(element)">
+                                          <mat-icon>edit</mat-icon>
+                                      </button>
+      
+                  <button mat-icon-button [disabled]="isDisabledUI(element)" class="material-icons app-toolbar-menu delete-button"
+                                          *ngIf="!element.get('isEditing')?.value && !element.get('isNew')?.value" (click)="delete(element)"
+                                          matTooltip="Delete" color="warn">
+                                          <mat-icon>delete</mat-icon>
+                                      </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data</td>
+              </tr>
+
+            </table>
+          </ng-container>
+
+        <mat-paginator #paginator [pageSize]="8" [pageSizeOptions]="[2, 5, 10, 25, 100]">
+        </mat-paginator>
+        </form> 
+
+
+      </mat-card-content>
+    </mat-card>
+</div>

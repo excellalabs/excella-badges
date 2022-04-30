@@ -1,161 +1,350 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Badge } from './badge';
+import { Badge, BadgeDto } from './badge';
 import { BadgeService } from './badge.service';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { getMatFormFieldMissingControlError } from '@angular/material/form-field';
 import { DialogComponentDialog } from '../dialog/dialog.component';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+
+//component specific
+import { Skill } from '../skill/skill';
+import { SkillService } from '../skill/skill.service';
+import { BadgeType } from '../badgetype/badgetype';
+import { BadgeTypeService } from '../badgetype/badgetype.service';
+
+const emptyGroup: FormGroup = new FormGroup({
+  id: new FormControl(-1),
+  icon: new FormControl(),
+  name: new FormControl(),
+  skill: new FormControl(),
+  badgeType: new FormControl(),
+  action: new FormControl('existingRecord'),
+  isEditing: new FormControl(false),
+  isNew: new FormControl(false)
+})
 
 @Component({
-  selector: 'app-Badge',
-  templateUrl: './Badge.component.html',
-  styleUrls: ['./Badge.component.scss']
+  selector: 'app-badge',
+  templateUrl: './badge.component.html',
+  styleUrls: ['./badge.component.scss']
 })
 export class BadgeComponent implements OnInit {
 
+  @ViewChild('paginator') paginator!: MatPaginator;
+
+  //mat pagination
+  pageSize = 8;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  //mat form
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['name', 'action'];
+  displayedColumns: string[] = ['icon', 'name', 'skill', 'badgeType', 'action'];
   form: FormGroup = new FormGroup({})
-  selectedIndex: number = -1
-  Badges: Badge[] = []
-  newBadge:Badge = {id: -1, name: ''} as Badge
+
+  //collections
+  records: Badge[] = []
+  filteredRecords: Badge[] = []
+  badgeTypes: BadgeType[] = []
+  skills: Skill[] = []
+
+  //provides a quick way to check mode without inspecting records
+  isEditing: boolean = false
+  isCreating: boolean = false
+
+  //custom filtering
+  filterCriteria: string = ""
+  // filterCapability: Capability = new Capability()
+  // filterSkilllevel: Skilllevel = new Skilllevel()
 
   constructor(
-    private BadgeService: BadgeService,
+    private service: BadgeService,
+    private skillService: SkillService,
+    private badgeTypeService: BadgeTypeService,
     private fb: FormBuilder,
     private _formBuilder: FormBuilder,
     public dialog: MatDialog
     ) { }
 
   ngOnInit(): void {
+    this.getRelatedData()
     this.loadData()
   }
 
+  /**
+   * Queries the data from the database
+   */
   loadData(){
+    this.service.getAll().subscribe(records => {
+      console.log("records = ",records)
+      this.records = records
+      this.filteredRecords = records
+      this.buildForm()
+    })
+  }
+
+  /**
+   * Resets the grid actions
+   */
+  private initialize(){
+    this.isCreating = false
+    this.isEditing = false
+  }
+  
+  /**
+   * Applies the filters
+   */
+  applyFilter(){
+    this.filteredRecords = this.records
+    let filterText = ''
+    if(this.filterCriteria !== ''){
+      filterText = this.filterCriteria
+      this.filteredRecords = this.records.filter(record => record.name?.toLowerCase().includes(filterText.toLowerCase()))
+    }
+    this.buildForm()
+  }
+
+  /**
+   * Resets the filter fields
+   */
+  resetFilters(){
+    this.filterCriteria = ''
+    this.filteredRecords = this.records
+    this.buildForm()
+  }
+
+  /**
+   * Calls the service to get the list of all capabilities and all skills
+   */
+  private getRelatedData(){
+    this.skillService.getAll().subscribe((skills: Skill[]) => {
+      this.skills = skills;
+    })
+    this.badgeTypeService.getAll().subscribe((badgeTypes: BadgeType[]) => {
+      this.badgeTypes = badgeTypes;
+    })
+  }
+
+  /**
+   * Builds the form group and form controls
+   */
+  private buildForm(){
+    this.dataSource = new MatTableDataSource<any>();
+
     this.form = this._formBuilder.group({
       rows: this._formBuilder.array([])
     });
 
-    this.BadgeService.getAll().subscribe(levels => {
-      console.log("received ",levels)
-      this.form = this.fb.group({
-        rows: this.fb.array(levels.map(val => this.fb.group({
-          id: new FormControl(val.id),
-          name: new FormControl({value: val.name, disabled: true}),
-          action: new FormControl('existingRecord'),
-          isEditing: new FormControl(false),
-          isNew: new FormControl(false)
-        })
-        )) //end of fb array
-      }); // end of form group cretation
-      this.dataSource = new MatTableDataSource((this.form.get('rows') as FormArray).controls);
-    })
+    this.form = this.fb.group({
+      rows: this.fb.array(
+        this.filteredRecords.map(
+          val => this.fb.group({
+            id: new FormControl(val.id),
+            icon: new FormControl(val.icon),
+            name: new FormControl(val.name),
+            skill: new FormControl(val.skill),
+            badgeType: new FormControl(val.badgeType),
+            action: new FormControl('existingRecord'),
+            isEditing: new FormControl(false),
+            isNew: new FormControl(false)
+          })
+      ))
+    });
+    this.dataSource = new MatTableDataSource((this.form.get('rows') as FormArray).controls);
+    this.dataSource.paginator = this.paginator;
   }
 
-  cancel(index: number){
-    this.selectedIndex = -1
-    const rows:FormArray = this.form.get('rows') as FormArray
-    if(rows.at(index)?.get('isNew')?.value){
-      this.dataSource = new MatTableDataSource<any>();
-      this.loadData()
-    } else {
-      rows.at(index)?.get('isEditing')?.patchValue(false)
-      rows.at(index)?.get('name')?.disable()
-    }
+  /**
+   * Edits an element
+   * @param element 
+   */
+  edit(element: FormGroup){
+    this.isEditing = true
+    element.get('isEditing')?.patchValue(true)
   }
 
-  getActive(index: number): string {
-    if(index === this.selectedIndex)
-      return "active"
-    else
-      return "inactive"
+  /**
+   * Determines if element in question is being edited or added
+   * @param element
+   * @returns 
+   */
+  isCurrent(element: FormGroup): boolean {
+    return element.get('isEditing')?.value || element.get('isNew')?.value
   }
 
-  checkActivate(index: number): void {
-    const rows:FormArray = this.form.get('rows') as FormArray
-    const isNew = rows.at(index)?.get('isNew')?.value
-    const isEditing = rows.at(index)?.get('isEditing')?.value
-    if(!isNew && !isEditing && this.selectedIndex==-1){
-      this.edit(index)
-    }
+  /**
+   * Cancels an add/edit
+   */
+  cancel(){
+    this.resetFilters()
+    this.initialize()
   }
 
-  edit(index: number){
-    const rows:FormArray = this.form.get('rows') as FormArray
-    rows.at(index).get('isEditing')?.patchValue(true)
-    rows.at(index).get('name')?.enable()
-    this.selectedIndex = index
+  /**
+   * Deletes an record
+   * @param element - record to be deleted
+   */
+  delete(element: FormGroup): void {
+    this.openDialog(element)
   }
 
-  openDialog(): void {
+  /**
+   * Opens a dialog asking if user is sure they wish to delete
+   */
+  openDialog(element: FormGroup): void {
     const dialogRef = this.dialog.open(DialogComponentDialog, {
       width: '500px',
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        const rows:FormArray = this.form.get('rows') as FormArray
-        rows.at(this.selectedIndex).get('isEditing')?.patchValue(false)
-        const id = rows.at(this.selectedIndex).get('id')?.value
-        this.BadgeService.delete(id).subscribe(result => {
-          this.dataSource = new MatTableDataSource<any>();
+        const id = element.get('id')?.value
+        element.get('isEditing')?.patchValue(false)
+        this.service.delete(id).subscribe(result => {
+          this.filterCriteria = ''
+          this.filteredRecords = this.records
           this.loadData()
+          this.initialize()
         })
       }
-      this.selectedIndex = -1
     });
   }
 
-  delete(index: number): void {
-    this.selectedIndex = index
-    this.openDialog()
-  }
-
+  /**
+   * Adds a new entry in the group
+   */
   create(){
+    this.resetFilters()
+    this.isCreating = true
     const rows:FormArray = this.form.get('rows') as FormArray
-    rows.push(new FormGroup({
-      id: new FormControl(),
-      name: new FormControl(),
-      action: new FormControl('existingRecord'),
-      isEditing: new FormControl(false),
-      isNew: new FormControl(true)
-    }))
-    this.selectedIndex = rows.length-1
+    let newGroup = emptyGroup
+    newGroup.get('id')?.setValue(0)
+    newGroup.get('isNew')?.setValue(true)
+    rows.push(newGroup)
+
+    var pageNumber = Math.ceil(this.records.length/this.paginator.pageSize-1)
+    this.paginator.pageIndex = pageNumber;
+
+    this.paginator.page.next({      
+        pageIndex: pageNumber,
+        pageSize: this.paginator.pageSize,
+        length: this.paginator.length
+    });
+
     this.dataSource = new MatTableDataSource((rows).controls);
+    this.dataSource.paginator = this.paginator;
   }
 
-  update(index: number): void {
-    this.selectedIndex = -1
-    const rows:FormArray = this.form.get('rows') as FormArray
-    rows.at(index).get('isEditing')?.patchValue(false)
-    rows.at(index).get('isNew')?.patchValue(false)
-    rows.at(index).get('name')?.disable()
-    const record = this.buildRecord(index)
+  /**
+   * Called after create or edit and changes are made
+   * @param element - the record being updated
+   */
+  update(element: FormGroup){
+    const record = this.buildDTO(element)
+    if(this.isValid(record)){
+      element.get('isEditing')?.patchValue(false)
+      element.get('isNew')?.patchValue(false)
     if(record.id){
-      this.BadgeService.update(record).subscribe()
+      
+      record.icon = ""
+      record.image = ""
+      console.log("updating record = ",record)
+      this.service.update(record).subscribe(result => {
+        console.log('result = ',result)
+        this.loadData()
+        this.initialize()
+        this.filterCriteria = ""
+      })
     } else {
-      this.BadgeService.create(record).subscribe(record => {
-        rows.at(index).get('id')?.patchValue(record.id)
+      record.icon = ""
+      record.image = ""
+      console.log("creating record = ",record)
+      this.service.create(record).subscribe(record => {
+        element.get('id')?.patchValue(record.id)
+        this.loadData()
+        this.initialize()
+        this.filterCriteria = ""
       })
     }
-
+    }else{
+      alert("Error found. Please check entry")
+    }
   }
 
-  isDisabled(index: number): boolean {
-    return (this.selectedIndex >=0 && index !== this.selectedIndex) ? true : false
+  /**
+   * Validates that there are no duplicates
+   * @param skill 
+   * @returns 
+   */
+  isValid(badge: BadgeDto){
+    if(badge.name === '')
+      return false
+    if(this.records.find(record => (record.name?.toLocaleLowerCase() === badge.name.toLocaleLowerCase() && record.id !== badge.id)) !== undefined)
+      return false 
+    return true  
   }
 
-  isEditing(index: number): boolean {
-    const rows:FormArray = this.form.get('rows') as FormArray
-    return rows.at(index).get('isEditing')?.value || rows.at(index).get('isNew')?.value
-  }
-
-  buildRecord(index: number): Badge {
-    const rows: FormArray = this.form.get('rows') as FormArray
-    const row = rows.at(index) as FormGroup
-    return new Badge(
-      row.get('id')?.value as number,
-      row.get('name')?.value as string
+  /**
+   * Create the record to save
+   * @param element - element to save
+   * @returns record to save
+   */
+  private buildDTO(element: FormGroup): BadgeDto {
+    return new BadgeDto(
+      element.get('id')?.value as number,
+      element.get('name')?.value as string,
+      element.get('skill')?.value.id as number,
+      element.get('badgeType')?.value.id as number,
+      null,
+      null
     )
   }
+
+  //Called from markup
+  //---------------------------------------
+  /**
+   * Called in markup to determine if record is the one being edited
+   * @param element - record in question
+   * @returns boolean
+   */
+    isEditingRecordUI(element: FormGroup): boolean {
+    return this.isEditing && (this.isCurrent(element))
+  }
+
+  /**
+   * Called in markup to determine if record is disabled from editing
+   * @param element - record in question
+   * @returns boolean
+   */
+  isDisabledUI(element: FormGroup): boolean {
+    //record is disabled if isEditing or isNew and !this.isCurrent
+    return (this.isEditing || this.isCreating) && !this.isCurrent(element)
+  }
+
+  /**
+   * Gets the name of the CSS class
+   * @param element - element in question
+   * @returns name of the css class to apply
+   */
+  getClassUI(element: FormGroup): string {
+    return (this.isCurrent(element)) ? "active" : "inactive"
+  }
+
+  selectIcon(element: FormGroup): void {
+    const dialogRef = this.dialog.open(DialogComponentDialog, {
+      width: '500px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        // const id = element.get('id')?.value
+        // element.get('isEditing')?.patchValue(false)
+        // this.service.delete(id).subscribe(result => {
+        //   this.filterCriteria = ''
+        //   this.filteredRecords = this.records
+        //   this.loadData()
+        //   this.initialize()
+        // })
+      }
+    });
+  }
+
 }

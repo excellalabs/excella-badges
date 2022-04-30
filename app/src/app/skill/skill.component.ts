@@ -5,12 +5,13 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogComponentDialog } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+
+//component specific
 import { Capability } from '../capability/capability';
 import { Skilllevel } from '../skilllevel/skilllevel';
 import { CapabilityService } from '../capability/capability.service';
 import { SkilllevelService } from '../skilllevel/skilllevel.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { filter } from 'rxjs';
 
 const emptyGroup: FormGroup = new FormGroup({
   id: new FormControl(-1),
@@ -30,11 +31,12 @@ const emptyGroup: FormGroup = new FormGroup({
 export class SkillComponent implements OnInit {
 
   @ViewChild('paginator') paginator!: MatPaginator;
-  // MatPaginator Inputs
-  // length = 100;
+
+  //mat pagination
   pageSize = 8;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
+  //mat form
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['name', 'capability', 'skilllevel', 'action'];
   form: FormGroup = new FormGroup({})
@@ -49,6 +51,7 @@ export class SkillComponent implements OnInit {
   isEditing: boolean = false
   isCreating: boolean = false
 
+  //custom filtering
   filterCriteria: string = ""
   filterCapability: Capability = new Capability()
   filterSkilllevel: Skilllevel = new Skilllevel()
@@ -65,9 +68,11 @@ export class SkillComponent implements OnInit {
   ngOnInit(): void {
     this.getRelatedData()
     this.loadData()
-    
   }
 
+  /**
+   * Queries the data from the database
+   */
   loadData(){
     this.service.getAll().subscribe(records => {
       this.records = records
@@ -75,17 +80,18 @@ export class SkillComponent implements OnInit {
       this.buildForm()
     })
   }
+
+  /**
+   * Resets the grid actions
+   */
   private initialize(){
     this.isCreating = false
     this.isEditing = false
   }
-
-  setPageSizeOptions(setPageSizeOptionsInput: string) {
-    if (setPageSizeOptionsInput) {
-      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-    }
-  }
   
+  /**
+   * Applies the filters
+   */
   applyFilter(){
     this.filteredRecords = this.records
     let filterText = ''
@@ -100,6 +106,9 @@ export class SkillComponent implements OnInit {
     this.buildForm()
   }
 
+  /**
+   * Resets the filter fields
+   */
   resetFilters(){
     this.filterCriteria = ''
     this.filterCapability = new Capability()
@@ -107,6 +116,7 @@ export class SkillComponent implements OnInit {
     this.filteredRecords = this.records
     this.buildForm()
   }
+
   /**
    * Calls the service to get the list of all capabilities and all skills
    */
@@ -119,15 +129,6 @@ export class SkillComponent implements OnInit {
     })
   }
 
-  // applyFilter(event: any) {
-    // let filterValue = event.target?.value as string
-    // filterValue = filterValue.trim(); // Remove whitespace
-    // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    // this.filteredRecords = this.records.filter(record => record.name?.toLowerCase().includes(filterValue))
-    // this.buildForm()
-    // this.dataSource.filter = filterValue;
-  // }
-
   /**
    * Builds the form group and form controls
    */
@@ -138,36 +139,45 @@ export class SkillComponent implements OnInit {
       rows: this._formBuilder.array([])
     });
 
-    // records.forEach(record => {
-      this.form = this.fb.group({
-        rows: this.fb.array(
-          this.filteredRecords.map(
-            val => this.fb.group({
-              id: new FormControl(val.id),
-              name: new FormControl(val.name),
-              capability: new FormControl(val.capability),
-              skilllevel:new FormControl(val.skilllevel),
-              action: new FormControl('existingRecord'),
-              isEditing: new FormControl(false),
-              isNew: new FormControl(false)
-            })
-        )) //end of fb array
-      }); // end of form group cretation
-      this.dataSource = new MatTableDataSource((this.form.get('rows') as FormArray).controls);
-      this.dataSource.paginator = this.paginator;
-    // })
+    this.form = this.fb.group({
+      rows: this.fb.array(
+        this.filteredRecords.map(
+          val => this.fb.group({
+            id: new FormControl(val.id),
+            name: new FormControl(val.name),
+            capability: new FormControl(val.capability),
+            skilllevel:new FormControl(val.skilllevel),
+            action: new FormControl('existingRecord'),
+            isEditing: new FormControl(false),
+            isNew: new FormControl(false)
+          })
+      ))
+    });
+    this.dataSource = new MatTableDataSource((this.form.get('rows') as FormArray).controls);
+    this.dataSource.paginator = this.paginator;
   }
 
-
+  /**
+   * Edits an element
+   * @param element 
+   */
   edit(element: FormGroup){
     this.isEditing = true
     element.get('isEditing')?.patchValue(true)
   }
 
+  /**
+   * Determines if element in question is being edited or added
+   * @param element
+   * @returns 
+   */
   isCurrent(element: FormGroup): boolean {
     return element.get('isEditing')?.value || element.get('isNew')?.value
   }
 
+  /**
+   * Cancels an add/edit
+   */
   cancel(){
     this.resetFilters()
     this.initialize()
@@ -234,7 +244,6 @@ export class SkillComponent implements OnInit {
    * @param element - the record being updated
    */
   update(element: FormGroup){
-
     const record = this.buildDTO(element)
     if(this.isValid(record)){
       element.get('isEditing')?.patchValue(false)
@@ -258,6 +267,11 @@ export class SkillComponent implements OnInit {
     }
   }
 
+  /**
+   * Validates that there are no duplicates
+   * @param skill 
+   * @returns 
+   */
   isValid(skill: SkillDto){
     if(skill.name === '')
       return false
@@ -287,19 +301,19 @@ export class SkillComponent implements OnInit {
    * @param element - record in question
    * @returns boolean
    */
-     isEditingRecordUI(element: FormGroup): boolean {
-      return this.isEditing && (this.isCurrent(element))
-    }
-  
-    /**
-     * Called in markup to determine if record is disabled from editing
-     * @param element - record in question
-     * @returns boolean
-     */
-    isDisabledUI(element: FormGroup): boolean {
-      //record is disabled if isEditing or isNew and !this.isCurrent
-      return (this.isEditing || this.isCreating) && !this.isCurrent(element)
-    }
+    isEditingRecordUI(element: FormGroup): boolean {
+    return this.isEditing && (this.isCurrent(element))
+  }
+
+  /**
+   * Called in markup to determine if record is disabled from editing
+   * @param element - record in question
+   * @returns boolean
+   */
+  isDisabledUI(element: FormGroup): boolean {
+    //record is disabled if isEditing or isNew and !this.isCurrent
+    return (this.isEditing || this.isCreating) && !this.isCurrent(element)
+  }
 
   /**
    * Gets the name of the CSS class

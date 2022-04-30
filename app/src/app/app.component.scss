@@ -1,5 +1,5 @@
-header{ min-height:10vh; }
-footer{ min-height:10vh; 
+header{ min-height:5vh; }
+footer{ min-height:5vh; 
     background-color: #1976d2;
     color: white;
 }
@@ -7,7 +7,7 @@ footer{ min-height:10vh;
 /* Trick */
 body{ 
   display:flex; 
-  height:80vh; 
+  height:90vh; 
   margin:0 !important;
   flex-direction:column; 
   overflow-x: hidden;
@@ -309,3 +309,5 @@ body{
       visibility: hidden;
     }
   }
+
+  

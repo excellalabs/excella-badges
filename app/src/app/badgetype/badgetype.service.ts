@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BadgeType } from './badgetype';
+import { BadgeType, BadgeTypeDto } from './badgetype';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +18,11 @@ export class BadgeTypeService {
     return this.http.get<BadgeType>( `${this.API_SERVER}/badgetype/${id}` );
   }
 
-  public create(badgetype: BadgeType){
+  public create(badgetype: BadgeTypeDto){
     return this.http.post<BadgeType>( `${this.API_SERVER}/badgetype`, badgetype);
   }
 
-  public update(badgetype: BadgeType){
+  public update(badgetype: BadgeTypeDto){
     return this.http.post<BadgeType>( `${this.API_SERVER}/badgetype/${badgetype.id}`, badgetype);
   }
 

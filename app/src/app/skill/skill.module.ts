@@ -12,7 +12,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-// import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
-    // MatSortModule,
     MatPaginatorModule,
     SkillRoutingModule,
     HttpClientModule,

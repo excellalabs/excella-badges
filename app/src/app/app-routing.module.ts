@@ -22,6 +22,18 @@ const routes: Routes = [
     path: 'skill',
     loadChildren: () => import('./skill/skill.module').then(m => m.SkillModule),
   },
+  {
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+  },
+  {
+    path: 'badge',
+    loadChildren: () => import('./badge/badge.module').then(m => m.BadgeModule),
+  },
+  {
+    path: 'badgerequirement',
+    loadChildren: () => import('./badgerequirement/badgerequirement.module').then(m => m.BadgeRequirementModule),
+  },
 ];
 
 @NgModule({
