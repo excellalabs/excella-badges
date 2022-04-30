@@ -10,17 +10,17 @@ exports.BadgeModule = void 0;
 const common_1 = require("@nestjs/common");
 const badge_controller_1 = require("./badge.controller");
 const badge_service_1 = require("./badge.service");
+const badgerequirement_service_1 = require("./badgerequirements/badgerequirement.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const badge_1 = require("./badge");
-const imageUpload_service_1 = require("../common/imageUpload/imageUpload.service");
-const imageUpload_1 = require("../common/imageUpload/imageUpload");
+const badgerequirement_1 = require("./badgerequirements/badgerequirement");
 let BadgeModule = class BadgeModule {
 };
 BadgeModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([badge_1.Badge, imageUpload_1.default])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([badge_1.Badge, badgerequirement_1.BadgeRequirement])],
         controllers: [badge_controller_1.BadgeController],
-        providers: [badge_service_1.BadgeService, imageUpload_service_1.default]
+        providers: [badge_service_1.BadgeService, badgerequirement_service_1.BadgeRequirementService]
     })
 ], BadgeModule);
 exports.BadgeModule = BadgeModule;

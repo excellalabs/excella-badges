@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { MulterModule } from '@nestjs/platform-express';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -23,15 +24,9 @@ import { BadgeTypeModule } from './badgetype/badgetype.module';
 import { SkillLevel } from './skilllevel/skilllevel'
 import { SkillLevelModule } from './skilllevel/skilllevel.module';
 
-import ImageFile from './common/imageUpload/imageUpload';
-import ImageUploadService from './common/imageUpload/imageUpload.service'
+import { BadgeRequirement } from './badge/badgerequirements/badgerequirement';
+import { BadgeRequirementModule } from './badge/badgerequirements/badgerequirement.module';
 
-
-import { BadgerequirementsModule } from './badgerequirements/badgerequirements.module';
-
-import { AchievementsModule } from './achievements/achievements.module';
-
-import { AchievementschecklistModule } from './achievementschecklist/achievementschecklist.module';
 
 @Module({
   imports: [
@@ -55,18 +50,19 @@ import { AchievementschecklistModule } from './achievementschecklist/achievement
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Capability, Skill, SkillLevel, BadgeType, Badge, ImageFile],
+      entities: [User, Capability, Skill, SkillLevel, BadgeType, Badge, BadgeRequirement],
       synchronize: true
+    }),
+    MulterModule.register({
+      dest: './uploads'
     }),
     UserModule,
     CapabilityModule,
     BadgeTypeModule,
     SkillLevelModule,
-    BadgerequirementsModule,
-    AchievementsModule,
-    AchievementschecklistModule,
+    BadgeRequirementModule,
     SkillModule,
-    BadgeModule
+    BadgeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

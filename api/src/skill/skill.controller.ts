@@ -64,7 +64,7 @@ export class SkillController {
      */
      @Post()
      async create(@Body() createDto: CreateSkillDto) {
-         console.log(createDto);
+         console.log('creating new skill ',createDto);
          return await this.skillService.create(createDto)
      }
 

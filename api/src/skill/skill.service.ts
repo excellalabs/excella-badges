@@ -30,17 +30,7 @@ export class SkillService {
     }
 
     findAll(){
-        return this.repo.find(
-            {
-                join: {
-                    alias: "skill",
-                    leftJoinAndSelect: {
-                        capability: "skill.capability",
-                        skilllevel: "skill.skilllevel",
-                    },
-                },
-            }
-        );
+        return this.repo.find();
     }
 
     async create(newSkill: CreateSkillDto) {
@@ -56,12 +46,14 @@ export class SkillService {
 
     async update(id: number, attrs: Partial<UpdateSkillDto>) {
         const skill = await this.findOne(id)
+        console.log('found skill = ',skill)
         if(!skill){
             console.error('Update: skill not found')
             return null
         }
         Object.assign(skill, attrs);
         skill.id = id
+        console.log('updating skill = ',skill)
         return this.repo.save(skill);
     }
 

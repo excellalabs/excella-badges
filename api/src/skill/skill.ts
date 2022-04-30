@@ -11,10 +11,12 @@ export class Skill {
     @Column()
     name: string;
 
-    @ManyToOne(() => Capability,  capability => capability.skill)
+    @ManyToOne(() => Capability, {eager: true})
+    @JoinColumn()
     capability: Capability;
 
-    @ManyToOne(() => SkillLevel,  skilllevel => skilllevel.skill)
+    @ManyToOne(() => SkillLevel, {eager: true})
+    @JoinColumn()
     skilllevel: SkillLevel;
 
     @OneToMany(() => Badge, badge => badge.skill)

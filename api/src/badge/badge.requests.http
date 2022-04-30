@@ -3,9 +3,11 @@ POST http://localhost:3000/badge
 Content-Type: application/json
 
 {
-    "name": "New Badge",
-    "skill": 1,
-    "badgeType": 1
+    "name": "New Badge2",
+    "icon": "javascript_advanced.png",
+    "image": "javascript_advanced.png",
+    "skill": 2,
+    "badgeType": 2
 }
 
 ### Get all badges
@@ -18,9 +20,13 @@ GET http://localhost:3000/badge/id/1
 DELETE http://localhost:3000/badge/4
 
 ### Update a badge
-PATCH http://localhost:3000/badge/4
+PATCH http://localhost:3000/badge/1
 Content-Type: application/json
 
 {
-    "name": "Expert"
+    "name": "JavaScript Advanced",
+    "skill": 1,
+    "badgeType": 1,
+    "icon": null,
+    "image": null
 }

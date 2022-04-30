@@ -1,0 +1,28 @@
+### Create new badge
+POST http://localhost:3000/badge/1/requirement
+Content-Type: application/json
+
+{
+    "name": "New Requirement 1",
+    "description": "New requiremnet description",
+    "badge": 1
+}
+
+### Get all requirements for badge id = 1
+GET http://localhost:3000/badge/1/requirements
+
+### Get a badge by id and requirement id
+GET http://localhost:3000/badge/1/requirement/1
+
+### Delete a badge by id and requirement 1
+DELETE http://localhost:3000/badge/4/requirement/1
+
+### Update a badge
+PATCH http://localhost:3000/badge/1/requirement/1
+Content-Type: application/json
+
+{
+    "name": "Updated requirement",
+    "description": "Updated description",
+    "badge": 1
+}

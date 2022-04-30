@@ -10,6 +10,4 @@ export class CapabilityDto {
 
     @Exclude()
     skill: Skill[]
-    // @Expose()
-    // category: CategoryDto;
 }

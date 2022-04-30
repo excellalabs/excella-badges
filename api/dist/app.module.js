@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const user_module_1 = require("./user/user.module");
@@ -25,10 +26,8 @@ const badgetype_1 = require("./badgetype/badgetype");
 const badgetype_module_1 = require("./badgetype/badgetype.module");
 const skilllevel_1 = require("./skilllevel/skilllevel");
 const skilllevel_module_1 = require("./skilllevel/skilllevel.module");
-const imageUpload_1 = require("./common/imageUpload/imageUpload");
-const badgerequirements_module_1 = require("./badgerequirements/badgerequirements.module");
-const achievements_module_1 = require("./achievements/achievements.module");
-const achievementschecklist_module_1 = require("./achievementschecklist/achievementschecklist.module");
+const badgerequirement_1 = require("./badge/badgerequirements/badgerequirement");
+const badgerequirement_module_1 = require("./badge/badgerequirements/badgerequirement.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -43,18 +42,19 @@ AppModule = __decorate([
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'sqlite',
                 database: 'db.sqlite',
-                entities: [user_1.User, capability_1.Capability, skill_1.Skill, skilllevel_1.SkillLevel, badgetype_1.BadgeType, badge_1.Badge, imageUpload_1.default],
+                entities: [user_1.User, capability_1.Capability, skill_1.Skill, skilllevel_1.SkillLevel, badgetype_1.BadgeType, badge_1.Badge, badgerequirement_1.BadgeRequirement],
                 synchronize: true
+            }),
+            platform_express_1.MulterModule.register({
+                dest: './uploads'
             }),
             user_module_1.UserModule,
             capability_module_1.CapabilityModule,
             badgetype_module_1.BadgeTypeModule,
             skilllevel_module_1.SkillLevelModule,
-            badgerequirements_module_1.BadgerequirementsModule,
-            achievements_module_1.AchievementsModule,
-            achievementschecklist_module_1.AchievementschecklistModule,
+            badgerequirement_module_1.BadgeRequirementModule,
             skill_module_1.SkillModule,
-            badge_module_1.BadgeModule
+            badge_module_1.BadgeModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

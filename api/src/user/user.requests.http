@@ -3,12 +3,12 @@ POST http://localhost:3000/user/create
 Content-Type: application/json
 
 {
-    "email": "john.smith@excella.com",
+    "email": "james.jamison@excella.com",
     "password": "mynewpassword",
-    "firstName": "John",
-    "lastName": "Smith",
-    "title": "Software Consultant",
-    "role": "Java Developer",
+    "firstName": "James",
+    "lastName": "Jamison",
+    "title": "Senior Consultant",
+    "role": ".NET Developer",
     "archived": false
 }
 

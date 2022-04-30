@@ -17,26 +17,10 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const badge_1 = require("./badge");
-const imageUpload_service_1 = require("../common/imageUpload/imageUpload.service");
 let BadgeService = class BadgeService {
-    constructor(repo, imageUploadService) {
+    constructor(repo) {
         this.repo = repo;
-        this.imageUploadService = imageUploadService;
         this.repo = repo;
-    }
-    async createIcon(badgeId, imageBuffer, filename) {
-        const icon = await this.imageUploadService.uploadDatabaseFile(imageBuffer, filename);
-        await this.repo.update(badgeId, {
-            iconId: icon.id
-        });
-        return icon;
-    }
-    async createImage(badgeId, imageBuffer, filename) {
-        const image = await this.imageUploadService.uploadDatabaseFile(imageBuffer, filename);
-        await this.repo.update(badgeId, {
-            imageId: image.id
-        });
-        return image;
     }
     findOne(id) {
         if (!id)
@@ -62,18 +46,20 @@ let BadgeService = class BadgeService {
     }
     async update(id, attrs) {
         const badge = await this.findOne(id);
+        console.log("found badge = ", badge);
         if (!badge) {
-            console.error('Update: Badge Type not found');
+            console.error('Update: Badge not found');
             return null;
         }
         Object.assign(badge, attrs);
         badge.id = id;
+        console.log("updating badge = ", badge);
         return this.repo.save(badge);
     }
     async remove(id) {
         const badge = await this.findOne(id);
         if (!badge) {
-            console.error('Update: Badge Type not found');
+            console.error('Update: Badge not found');
             return null;
         }
         return this.repo.delete(id);
@@ -82,8 +68,7 @@ let BadgeService = class BadgeService {
 BadgeService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(badge_1.Badge)),
-    __metadata("design:paramtypes", [typeorm_1.Repository,
-        imageUpload_service_1.default])
+    __metadata("design:paramtypes", [typeorm_1.Repository])
 ], BadgeService);
 exports.BadgeService = BadgeService;
 //# sourceMappingURL=badge.service.js.map

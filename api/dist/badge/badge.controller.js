@@ -18,9 +18,14 @@ const badge_service_1 = require("./badge.service");
 const create_badge_dto_1 = require("./dtos/create-badge.dto");
 const update_badge_dto_1 = require("./dtos/update-badge.dto");
 const platform_express_1 = require("@nestjs/platform-express");
+const uploadfile_dto_1 = require("./dtos/uploadfile.dto");
+const badgerequirement_service_1 = require("./badgerequirements/badgerequirement.service");
+const create_badgerequirement_dto_1 = require("./badgerequirements/dtos/create-badgerequirement.dto");
+const update_badgerequirement_dto_1 = require("./badgerequirements/dtos/update-badgerequirement.dto");
 let BadgeController = class BadgeController {
-    constructor(badgeService) {
+    constructor(badgeService, badgeRequirementService) {
         this.badgeService = badgeService;
+        this.badgeRequirementService = badgeRequirementService;
     }
     findOne(id) {
         return this.badgeService.findOne(id);
@@ -33,17 +38,42 @@ let BadgeController = class BadgeController {
         return this.badgeService.findAll();
     }
     async create(createDto) {
+        console.log("creating new badge ", createDto);
         return await this.badgeService.create(createDto);
     }
-    async addIcon(id, file) {
-        console.log("uploading file: ", file);
-        return this.badgeService.createIcon(parseInt(id), file.buffer, file.originalname);
+    addIcon(id, body, file) {
+        console.log("id = ", id);
+        console.log("body = ", body);
+        console.log("file = ", file);
     }
-    update(id, body) {
-        this.badgeService.update(parseInt(id), body);
+    async update(id, body) {
+        console.log("body = ", body);
+        return await this.badgeService.update(parseInt(id), body);
     }
     delete(id) {
         return this.badgeService.remove(parseInt(id));
+    }
+    findAllRequirements(badgeid) {
+        return this.badgeRequirementService.findAll(parseInt(badgeid));
+    }
+    findRequirement(badgeid, id) {
+        return this.badgeRequirementService.findOne(parseInt(id));
+    }
+    async createRequirement(badgeid, createDto) {
+        return this.badgeService.findOne(parseInt(badgeid)).then(badge => {
+            createDto.badge = badge;
+            return this.badgeRequirementService.create(createDto);
+        });
+    }
+    async updateRequirement(badgeid, id, updateDto) {
+        console.log("retrieving requirements for badge = ", badgeid);
+        console.log("id = ", id);
+        console.log("update dto = ", updateDto);
+        console.log("update obj = ", updateDto);
+        return await this.badgeRequirementService.update(parseInt(id), updateDto);
+    }
+    async deleteRequirement(params) {
+        return await this.badgeRequirementService.remove(parseInt(params.id));
     }
 };
 __decorate([
@@ -77,10 +107,11 @@ __decorate([
     (0, common_1.Post)('/:id/icon'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
     __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.UploadedFile)()),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:paramtypes", [String, uploadfile_dto_1.UploadFileDto, Object]),
+    __metadata("design:returntype", void 0)
 ], BadgeController.prototype, "addIcon", null);
 __decorate([
     (0, common_1.Patch)('/:id'),
@@ -88,7 +119,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_badge_dto_1.UpdateBadgeDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], BadgeController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('/:id'),
@@ -97,9 +128,48 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], BadgeController.prototype, "delete", null);
+__decorate([
+    (0, common_1.Get)('/:badgeid/requirements'),
+    __param(0, (0, common_1.Param)('badgeid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], BadgeController.prototype, "findAllRequirements", null);
+__decorate([
+    (0, common_1.Get)('/:badgeid/requirement/:id'),
+    __param(0, (0, common_1.Param)('badgeid')),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", void 0)
+], BadgeController.prototype, "findRequirement", null);
+__decorate([
+    (0, common_1.Post)('/:badgeid/requirement'),
+    __param(0, (0, common_1.Param)('badgeid')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, create_badgerequirement_dto_1.CreateBadgeRequirementDto]),
+    __metadata("design:returntype", Promise)
+], BadgeController.prototype, "createRequirement", null);
+__decorate([
+    (0, common_1.Patch)('/:badgeid/requirement/:id'),
+    __param(0, (0, common_1.Param)('badgeid')),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, update_badgerequirement_dto_1.UpdateBadgeRequirementDto]),
+    __metadata("design:returntype", Promise)
+], BadgeController.prototype, "updateRequirement", null);
+__decorate([
+    (0, common_1.Delete)('/:badgeid/requirement/:id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], BadgeController.prototype, "deleteRequirement", null);
 BadgeController = __decorate([
     (0, common_1.Controller)('badge'),
-    __metadata("design:paramtypes", [badge_service_1.BadgeService])
+    __metadata("design:paramtypes", [badge_service_1.BadgeService, badgerequirement_service_1.BadgeRequirementService])
 ], BadgeController);
 exports.BadgeController = BadgeController;
 //# sourceMappingURL=badge.controller.js.map
