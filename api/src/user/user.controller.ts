@@ -16,8 +16,9 @@ export class UserController {
      * @param body 
      * @returns authenticated user
      */
-    @Post('/create')
+    @Post()
     async create(@Body() newUser: CreateUserDto) {
+        console.log("creating new user")
         return await this.userService.create(newUser)
     }
 

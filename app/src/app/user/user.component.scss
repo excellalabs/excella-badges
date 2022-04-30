@@ -2,18 +2,7 @@ mat-card {
   background-color: #919294;
   width:90%
 }
-.mat-column-id {
-  flex: none;
-  width: 10%;
-}
-.mat-column-name {
-  flex: none;
-  width: 85%;
-}
-.mat-column-actions {
-  flex: none;
-  width: 5%;
-}
+
 .mat-form-field-underline {
 display:none;
 }
@@ -40,7 +29,7 @@ mat-form-field {
 .mat-header-cell {
   background-color:#0e3964 !important;
   padding-left:30px;
-  font-size:14pt;
+  font-size:12pt;
   
 }
 td {
@@ -56,14 +45,14 @@ td {
   padding: 0px 0px 0px 20px;
 }
 ::ng-deep .mat-form-field {
-  font-size: 14px;
-  width: 100%;
+  font-size: 12px;
+  width: 80%;
   color:black !important;
 }
 
 ::ng-deep .mat-select-panel{
   background-color: #f8f8e7;
-  font-size: 10px;
+  font-size: 8px;
   color: white;
 }
 

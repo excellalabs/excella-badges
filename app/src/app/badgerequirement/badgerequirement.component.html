@@ -4,7 +4,8 @@
     <ng-container>
     <h3>Choose a badge to review requirements:</h3>
     <mat-select id="badgeselect" [(ngModel)]="selectedBadge" aria-placeholder="Select One"  (selectionChange)="loadData()">
-      <mat-option selected *ngFor="let badge of badges" [value]="badge">{{ badge.name }}</mat-option>
+      <mat-option>Choose A Badge</mat-option>
+      <mat-option *ngFor="let badge of badges" [value]="badge">{{ badge.name }}</mat-option>
     </mat-select><br/><br/>
   </ng-container>
     <mat-card>

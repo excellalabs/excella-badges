@@ -26,6 +26,7 @@ let UserController = class UserController {
         this.authService = authService;
     }
     async create(newUser) {
+        console.log("creating new user");
         return await this.userService.create(newUser);
     }
     async login(body, session) {
@@ -58,7 +59,7 @@ let UserController = class UserController {
     }
 };
 __decorate([
-    (0, common_1.Post)('/create'),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),

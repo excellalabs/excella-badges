@@ -19,6 +19,7 @@ export class UserService {
   }
 
   public create(user: User){
+    console.log("sending user = ", user)
     return this.http.post<User>( `${this.API_SERVER}/user`, user);
   }
 

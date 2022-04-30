@@ -11,6 +11,8 @@ const emptyGroup: FormGroup = new FormGroup({
   id: new FormControl(-1),
   firstName: new FormControl(),
   lastName: new FormControl(),
+  password: new FormControl(),
+  title: new FormControl(),
   email: new FormControl(),
   role: new FormControl(),
   action: new FormControl('existingRecord'),
@@ -33,7 +35,7 @@ export class UserComponent implements OnInit {
 
   //mat form
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'action'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'password', 'title', 'email', 'role', 'action'];
   form: FormGroup = new FormGroup({})
 
   //collections
@@ -86,6 +88,7 @@ export class UserComponent implements OnInit {
       this.filteredRecords = this.records.filter(record => {
         return record.firstName?.toLowerCase().includes(this.filterCriteria.toLowerCase()) || 
         record.lastName?.toLowerCase().includes(this.filterCriteria.toLowerCase()) ||
+        record.title?.toLowerCase().includes(this.filterCriteria.toLowerCase()) ||
         record.email?.toLowerCase().includes(this.filterCriteria.toLowerCase()) ||
         record.role?.toLowerCase().includes(this.filterCriteria.toLowerCase())
       })
@@ -119,6 +122,8 @@ export class UserComponent implements OnInit {
             id: new FormControl(val.id),
             firstName: new FormControl(val.firstName),
             lastName: new FormControl(val.lastName),
+            password: new FormControl(val.password),
+            title: new FormControl(val.title),
             email: new FormControl(val.email),
             role: new FormControl(val.role),
             action: new FormControl('existingRecord'),
@@ -262,8 +267,10 @@ export class UserComponent implements OnInit {
       element.get('id')?.value as number,
       element.get('firstName')?.value as string,
       element.get('lastName')?.value as string,
+      element.get('password')?.value as string,
+      element.get('title')?.value as string,
       element.get('email')?.value as string,
-      element.get('role')?.value as string
+      element.get('role')?.value as string,
     )
   }
 
