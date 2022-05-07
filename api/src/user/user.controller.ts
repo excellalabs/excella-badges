@@ -5,6 +5,7 @@ import { UserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { AuthService } from '../auth/auth.service';
+import { AuthUserDto } from './dtos/auth-user.dto';
 
 @Serialize(UserDto)
 @Controller('user')
@@ -27,8 +28,10 @@ export class UserController {
      * @param body 
      * @returns authenticated user
      */
-    @Post('/login')
-    async login(@Body() body: CreateUserDto, @Session() session) {
+    @Post('/authenticate')
+    async authenticate(@Body() body: AuthUserDto, @Session() session) {
+        console.log(body.email)
+        console.log(body.password)
         const user = await this.authService.authenticate(body.email, body.password);
             session.userId = user.id
             session.save((err) => {
@@ -36,6 +39,11 @@ export class UserController {
             })
     }
 
+    @Get('/session')
+    isAuthenticated(@Session() session) {
+        console.log(session.userId);
+        return session.userId !== undefined;
+    }
     /**
      * Logs a user out of the session
      * @param session 

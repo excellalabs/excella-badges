@@ -9,6 +9,7 @@ import { SkilllevelModule } from './skilllevel/skilllevel.module';
 import { SkillModule } from './skill/skill.module';
 import { BadgeRequirementModule } from './badgerequirement/badgerequirement.module';
 import { BadgeTypeModule } from './badgetype/badgetype.module';
+import { UserModule } from './user/user.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogComponentDialog } from './dialog/dialog.component';
@@ -22,6 +23,7 @@ import { MatCardModule } from  '@angular/material/card';
 import { MatInputModule } from  '@angular/material/input';
 import { MatButtonModule } from  '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { MatIconModule } from '@angular/material/icon';
     SkillModule,
     BadgeTypeModule,
     BadgeRequirementModule,
+    UserModule,
 
     BrowserAnimationsModule,
     MatDialogModule,

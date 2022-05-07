@@ -55,8 +55,6 @@ mat-form-field {
 }
 td {
   border:1px solid gray;
-  // padding:3px;
-  // margin:3px;
   padding-left:5px;
 }
 .mat-paginator-range-label {
@@ -73,25 +71,16 @@ td {
   color:black !important;
 }
 
-::ng-deep .mat-select {
-  // color: black !important;
-}
 ::ng-deep .mat-select-panel{
   background-color: #f8f8e7;
   font-size: 10px;
   color: white;
 }
 
-::ng-deep .mat-select-content{
-// color:black !important;
-}
 .mat-option {
   color:black;
 }
 
-::ng-deep .mat-select-value {
-  // color:black !important;
-}
 .mat-icon-button:disabled {
   color: gray;
 }

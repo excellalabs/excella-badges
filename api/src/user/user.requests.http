@@ -1,19 +1,32 @@
 ### Create new user
-POST http://localhost:3000/user/create
+POST http://localhost:3000/user
 Content-Type: application/json
 
 {
-    "email": "james.jamison@excella.com",
+    "email": "bill.bob@excella.com",
     "password": "mynewpassword",
-    "firstName": "James",
-    "lastName": "Jamison",
-    "title": "Senior Consultant",
-    "role": ".NET Developer",
+    "firstName": "Bill",
+    "lastName": "Bob",
+    "title": "Consultant",
+    "role": "Python Developer",
     "archived": false
 }
 
+### Authenticate
+POST http://localhost:3000/user/authenticate
+Content-Type: application/json
+
+{
+    "email": "bill.bob@excella.com",
+    "password": "mynewpassword"
+}
+
+### Determine if a session exists
+GET http://localhost:3000/user/session
+
+
 ### Sign out
-POST http://localhost:3000/user/signout
+POST http://localhost:3000/user/logout
 
 ### Get Session User
 GET http://localhost:3000/user/currentUser
@@ -25,7 +38,7 @@ DELETE http://localhost:3000/user/2
 GET http://localhost:3000/user
 
 ### Get a user by id
-GET http://localhost:3000/user/id/6
+GET http://localhost:3000/user/id/3
 
 ### Get user by email
 GET http://localhost:3000/user/email/matthew.ratliff@excella.com
